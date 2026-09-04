@@ -3,7 +3,7 @@
 // Cache-First Strategy for 100% Offline Airplane Mode Execution
 // =========================================================================
 
-const CACHE_NAME = 'pahar-rakshak-v1.2.0';
+const CACHE_NAME = 'pahar-rakshak-v1.3.0';
 
 const ASSETS_TO_CACHE = [
   './',
