@@ -1,12 +1,13 @@
 // =========================================================================
 // PaharRakshak - Module B6: Road Status Mesh & Route Status Board
 // Crowd-sourced Blockage Logging (Photo, Location, Time, Passability),
-// On-device AI Deduplication & Route Summaries
+// On-device Spatio-Temporal AI Deduplication & Route Summaries
 // =========================================================================
 
 import { t, getLanguage } from './i18n.js';
 import { aiEngine } from './ai-engine.js';
 import { saveRoadReport, getAllRoadReports } from './db.js';
+import { escapeHtml, stringSimilarity } from './utils.js';
 
 const MOUNTAIN_CORRIDORS = [
   'NH-55 (Siliguri - Tindharia - Kurseong - Darjeeling)',
@@ -26,7 +27,7 @@ export function initRoadMesh() {
 
   // Populate corridors
   if (corridorSelect && corridorSelect.children.length <= 1) {
-    corridorSelect.innerHTML = MOUNTAIN_CORRIDORS.map(c => `<option value="${c}">${c}</option>`).join('');
+    corridorSelect.innerHTML = MOUNTAIN_CORRIDORS.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
   }
 
   if (photoInput) {
@@ -95,6 +96,76 @@ async function handleRoadReportSubmission() {
   await renderRoadMesh();
 }
 
+/**
+ * Performs Spatio-Temporal Clustering & Deduplication on raw road reports
+ * Clusters reports within 2 hours having matching corridor and fuzzy landmark similarity
+ */
+export function clusterAndDeduplicateReports(reports) {
+  if (!reports || reports.length === 0) return [];
+
+  // Sort by timestamp descending (newest first)
+  const sorted = [...reports].sort((a, b) => b.timestamp - a.timestamp);
+  const clusters = [];
+  const assigned = new Set();
+  const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
+
+  for (let i = 0; i < sorted.length; i++) {
+    if (assigned.has(i)) continue;
+
+    const base = sorted[i];
+    assigned.add(i);
+
+    const cluster = {
+      primary: base,
+      corridor: base.corridor,
+      reports: [base],
+      locations: [base.locationDetail],
+      hasPhoto: Boolean(base.photo),
+      photo: base.photo,
+      earliestTimestamp: base.timestamp,
+      latestTimestamp: base.timestamp
+    };
+
+    for (let j = i + 1; j < sorted.length; j++) {
+      if (assigned.has(j)) continue;
+
+      const candidate = sorted[j];
+      const isSameCorridor = candidate.corridor === base.corridor;
+      const isWithinTimeWindow = Math.abs(base.timestamp - candidate.timestamp) <= TWO_HOURS_MS;
+      const similarity = stringSimilarity(base.locationDetail, candidate.locationDetail);
+
+      // Match if same corridor AND (within 2 hours OR landmark fuzzy similarity >= 0.45)
+      if (isSameCorridor && (isWithinTimeWindow || similarity >= 0.45)) {
+        assigned.add(j);
+        cluster.reports.push(candidate);
+        if (!cluster.locations.includes(candidate.locationDetail)) {
+          cluster.locations.push(candidate.locationDetail);
+        }
+        if (!cluster.photo && candidate.photo) {
+          cluster.photo = candidate.photo;
+          cluster.hasPhoto = true;
+        }
+        cluster.earliestTimestamp = Math.min(cluster.earliestTimestamp, candidate.timestamp);
+        cluster.latestTimestamp = Math.max(cluster.latestTimestamp, candidate.timestamp);
+      }
+    }
+
+    // Determine consensus passability
+    if (cluster.reports.some(r => r.passable === 'no')) {
+      cluster.consensusPassability = 'no';
+    } else if (cluster.reports.some(r => r.passable === 'caution')) {
+      cluster.consensusPassability = 'caution';
+    } else {
+      cluster.consensusPassability = 'yes';
+    }
+
+    cluster.witnessCount = cluster.reports.length;
+    clusters.push(cluster);
+  }
+
+  return clusters;
+}
+
 export async function renderRoadMesh() {
   const statusBoardContainer = document.getElementById('route-status-board');
   const feedContainer = document.getElementById('road-reports-feed');
@@ -102,7 +173,7 @@ export async function renderRoadMesh() {
 
   const allReports = await getAllRoadReports();
 
-  // 1. Group & Cluster by Corridor for Deduplication & Summarization (Spatial-temporal clustering)
+  // 1. Group & Cluster by Corridor
   const corridorClusters = {};
   MOUNTAIN_CORRIDORS.forEach(c => { corridorClusters[c] = []; });
 
@@ -114,25 +185,33 @@ export async function renderRoadMesh() {
 
   // 2. Render AI Summarized Route Board
   const summaryPromises = MOUNTAIN_CORRIDORS.map(async (corridor) => {
-    const cluster = corridorClusters[corridor] || [];
-    const summaryText = await aiEngine.summarizeCorridorMesh(corridor, cluster);
+    const rawReports = corridorClusters[corridor] || [];
+    const deduplicatedEvents = clusterAndDeduplicateReports(rawReports);
+    const summaryText = await aiEngine.summarizeCorridorMesh(corridor, rawReports);
     
     let statusClass = 'status-open';
-    if (cluster.some(r => r.passable === 'no')) {
+    if (deduplicatedEvents.some(e => e.consensusPassability === 'no')) {
       statusClass = 'status-blocked';
-    } else if (cluster.some(r => r.passable === 'caution')) {
+    } else if (deduplicatedEvents.some(e => e.consensusPassability === 'caution')) {
       statusClass = 'status-caution';
-    } else if (cluster.length === 0) {
+    } else if (rawReports.length === 0) {
       statusClass = 'status-neutral';
     }
+
+    const dupNote = rawReports.length > deduplicatedEvents.length 
+      ? `<span class="badge badge-synced" style="font-size: 0.7rem; margin-left: 6px;">⚡ ${rawReports.length - deduplicatedEvents.length} Duplicates Deduplicated</span>`
+      : '';
 
     return `
       <div class="route-status-card card ${statusClass}">
         <div class="route-status-header">
-          <h4 class="route-name">${corridor}</h4>
-          <span class="report-badge-pill">${cluster.length} report(s)</span>
+          <h4 class="route-name">${escapeHtml(corridor)}</h4>
+          <div>
+            <span class="report-badge-pill">${deduplicatedEvents.length} event(s)</span>
+            ${dupNote}
+          </div>
         </div>
-        <p class="route-summary-text">${summaryText}</p>
+        <p class="route-summary-text">${escapeHtml(summaryText)}</p>
       </div>
     `;
   });
@@ -140,30 +219,39 @@ export async function renderRoadMesh() {
   const boardHtmls = await Promise.all(summaryPromises);
   statusBoardContainer.innerHTML = boardHtmls.join('');
 
-  // 3. Render Recent Live Mesh Feed
-  if (allReports.length === 0) {
+  // 3. Render Deduplicated Live Mesh Feed
+  const deduplicatedFeed = clusterAndDeduplicateReports(allReports);
+
+  if (deduplicatedFeed.length === 0) {
     feedContainer.innerHTML = `<div class="empty-state">${t('noReportsYet')}</div>`;
     return;
   }
 
-  feedContainer.innerHTML = allReports.slice(0, 10).map(r => {
-    const timeAgo = formatTimeAgo(r.timestamp);
-    const passClass = r.passable === 'no' ? 'badge-critical' :
-                      r.passable === 'caution' ? 'badge-high' : 'badge-synced';
-    const passLabel = r.passable === 'no' ? t('passableNo') :
-                      r.passable === 'caution' ? t('passableCaution') : t('passableYes');
+  feedContainer.innerHTML = deduplicatedFeed.slice(0, 10).map(cluster => {
+    const timeAgo = formatTimeAgo(cluster.latestTimestamp);
+    const passClass = cluster.consensusPassability === 'no' ? 'badge-critical' :
+                      cluster.consensusPassability === 'caution' ? 'badge-high' : 'badge-synced';
+    const passLabel = cluster.consensusPassability === 'no' ? t('passableNo') :
+                      cluster.consensusPassability === 'caution' ? t('passableCaution') : t('passableYes');
+
+    const witnessBadge = cluster.witnessCount > 1 
+      ? `<span class="badge badge-synced" style="font-size: 0.72rem;">👥 ${cluster.witnessCount} Witness Confirmations (Deduplicated)</span>`
+      : '';
+
+    const locationsMerged = cluster.locations.map(l => escapeHtml(l)).join(' • ');
 
     return `
       <div class="feed-item card">
         <div class="feed-header">
-          <span class="badge ${passClass}">${passLabel}</span>
-          <span class="feed-time">🕒 ${timeAgo}</span>
+          <span class="badge ${passClass}">${escapeHtml(passLabel)}</span>
+          ${witnessBadge}
+          <span class="feed-time">🕒 ${escapeHtml(timeAgo)}</span>
         </div>
-        <div class="feed-body" style="display: flex; gap: 10px;">
-          ${r.photo ? `<img src="${r.photo}" style="width: 50px; height: 50px; border-radius: 6px; object-fit: cover;" alt="Blockage" />` : ''}
+        <div class="feed-body" style="display: flex; gap: 10px; align-items: flex-start;">
+          ${cluster.photo ? `<img src="${cluster.photo}" style="width: 54px; height: 54px; border-radius: 6px; object-fit: cover; flex-shrink: 0;" alt="Blockage" />` : ''}
           <div>
-            <strong>${r.corridor}</strong>
-            <p class="feed-location">📍 ${r.locationDetail}</p>
+            <strong>${escapeHtml(cluster.corridor)}</strong>
+            <p class="feed-location" style="margin-top: 2px;">📍 ${locationsMerged}</p>
           </div>
         </div>
       </div>

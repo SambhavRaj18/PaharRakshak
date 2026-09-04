@@ -5,6 +5,7 @@
 
 import { t, getLanguage } from './i18n.js';
 import { aiEngine } from './ai-engine.js';
+import { escapeHtml } from './utils.js';
 
 let emergencyKb = [];
 let sheltersData = [];
@@ -114,7 +115,7 @@ async function handleAiQuery() {
     answerBox.innerHTML = `
       <div class="ai-response-card card animate-fade-in">
         <div class="response-badge" style="background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; display: inline-block; margin-bottom: 8px;">
-          ${badgeText}
+          ${escapeHtml(badgeText)}
         </div>
         <div class="response-text">${formatMarkdown(result.answer)}</div>
       </div>
@@ -129,7 +130,8 @@ async function handleAiQuery() {
 }
 
 function formatMarkdown(text) {
-  return text
+  if (!text) return '';
+  return escapeHtml(text)
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br/>');
 }
@@ -148,12 +150,12 @@ export function renderGuidanceArticles() {
     return `
       <details class="guide-accordion-item card" ${isFirst}>
         <summary class="guide-summary">
-          <span class="guide-category-tag">${item.category}</span>
-          <h4 class="guide-title">${title}</h4>
+          <span class="guide-category-tag">${escapeHtml(item.category)}</span>
+          <h4 class="guide-title">${escapeHtml(title)}</h4>
         </summary>
         <div class="guide-content">
           <ol class="guide-steps-list">
-            ${steps.map(s => `<li>${s}</li>`).join('')}
+            ${steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
           </ol>
         </div>
       </details>
@@ -194,8 +196,8 @@ export function renderSheltersList(filter = 'all') {
       <div class="shelter-card card">
         <div class="shelter-card-header">
           <div>
-            <h4 class="shelter-name">${name}</h4>
-            <span class="shelter-type">${s.type}</span>
+            <h4 class="shelter-name">${escapeHtml(name)}</h4>
+            <span class="shelter-type">${escapeHtml(s.type)}</span>
           </div>
           <div class="distance-badge">
             <span class="dist-num">${s.distanceKm.toFixed(1)}</span>
@@ -205,19 +207,19 @@ export function renderSheltersList(filter = 'all') {
 
         <div class="shelter-details">
           <div class="detail-row">
-            <span>⛰️ ${t('elevationLabel')} ${s.elevation}</span>
+            <span>⛰️ ${t('elevationLabel')} ${escapeHtml(s.elevation)}</span>
             <span>🛏️ ${t('bedsLabel')} ${s.beds} beds</span>
           </div>
           <div class="detail-row">
-            <span>📍 ${s.address}</span>
+            <span>📍 ${escapeHtml(s.address)}</span>
           </div>
           <div class="facilities-tags">
-            ${s.facilities.map(f => `<span class="facility-pill">${f}</span>`).join('')}
+            ${s.facilities.map(f => `<span class="facility-pill">${escapeHtml(f)}</span>`).join('')}
           </div>
         </div>
 
         <div class="shelter-card-actions">
-          <a href="tel:${s.contact.split('/')[0].trim()}" class="btn btn-sm btn-outline">📞 Call: ${s.contact}</a>
+          <a href="tel:${escapeHtml(s.contact.split('/')[0].trim())}" class="btn btn-sm btn-outline">📞 Call: ${escapeHtml(s.contact)}</a>
         </div>
       </div>
     `;

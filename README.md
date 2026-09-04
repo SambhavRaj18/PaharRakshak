@@ -1,59 +1,67 @@
-# 🏔️ PaharRakshak (पहाडरक्षक / পাহাড়রক্ষক)
+# 🏔️ PaharRakshak (पहाडरक्षक / পাহাড়রক্ষक)
 ### Offline Landslide Reporter (B1) + Road Status Mesh (B6) + Disaster-Ready Hills Assistant (B7)
 **GDG Siliguri — Code for Communities (Toy Train Edition)**
 
 ---
 
 ## 📌 Project Overview
-**PaharRakshak** is a unified, 100% offline civic Progressive Web App (PWA) built specifically for the Darjeeling Himalayan Railway (DHR) corridor and mountain communities. During intense monsoon cloudbursts and landslides (like the October 2025 disaster where >300 mm of rain severed communication), cell towers and power grids routinely fail.
+**PaharRakshak** is a unified, 100% offline civic Progressive Web App (PWA) engineered specifically for the Darjeeling Himalayan Railway (DHR) corridor and vulnerable mountain communities. During severe monsoon cloudbursts and landslides (such as the October 2025 disaster where >300 mm of rain severed communication), cell towers and power grids routinely fail.
 
-PaharRakshak absorbs **Problem Statements B1, B6, and B7** into one cohesive civic survival system:
+PaharRakshak unifies **Problem Statements B1, B6, and B7** into one cohesive civic survival system:
+
 1. **B1: Offline Landslide Reporter & Queue**:
-   - Camera photo capture (`getUserMedia`) of slope fissures, rockfalls, or retaining wall bulges.
-   - On-device vision analysis & AI hazard classification.
-   - Generates plain-language risk notes and actionable safety steps.
+   - **On-Device Vision Classifier**: Uses HTML5 Canvas and 2D **Sobel Edge Gradients**, pixel luminance, and vegetation/mud ratios to detect shear lines, tension cracks, and water seepage. Auto-predicts hazard classification (`hazardCrack`, `hazardSeepage`, `hazardWallBulge`, `hazardTiltedTrees`, `hazardDebris`) with confidence scoring.
+   - Generates plain-language risk explanations and immediate safety action steps in 4 languages.
    - Persistent `IndexedDB` storage with offline queuing (`queued`) and automatic sync status flipping (`synced`).
-2. **B6: Road Status Mesh**:
+
+2. **B6: Road Status Mesh & Route Status Board**:
    - Crowd-sourced road blockage reporting across key mountain corridors (NH-55, Rohini Road, Pankhabari Road, NH-110, Peshok Road, Mirik Road).
-   - On-device AI deduplication and real-time route status board summarization.
+   - **On-Device Spatio-Temporal AI Deduplication**: Clusters incoming reports within a 2-hour window using corridor matching and fuzzy Levenshtein landmark similarity to determine consensus passability and aggregate witness confirmations.
+   - Real-time route status board summarizing corridor health.
+
 3. **B7: Disaster-Ready Hills Assistant (Unifying Shell)**:
    - Curated emergency knowledge base for 12+ hill emergency scenarios (Landslides, Cloudbursts, Flash Floods, Cold Exposure/Hypothermia, PHC Medical Isolation, Spring Water Disinfection).
-   - Conversational offline RAG Q&A assistant.
    - Distance-ranked Primary Health Centre (PHC), District Hospital, and Emergency Shelter Locator using browser Geolocation and Haversine distance calculations.
-4. **B1/B6: P2P Zero-Network Alert Relay**:
-   - Optical high-contrast QR beacon generator for zero-signal phone-to-phone alert transmission.
-   - WebRTC DataChannel / Web Bluetooth transport simulation.
+   - Grounded Offline RAG Q&A assistant with dynamic spatial awareness.
+
+4. **Zero-Network P2P Emergency Relay**:
+   - **Real ISO QR Code Encoder**: Implements ISO/IEC 18004 standard QR generation with Reed-Solomon Error Correction (no third-party server or CDN required).
+   - **Real Optical QR Scanner**: Reads broadcast QR codes directly via `BarcodeDetector` camera feed or captured photo.
+   - WebRTC DataChannel / manual SDP exchange for device-to-device offline transmission.
    - Client-side Web Audio emergency horn & Web Speech API Text-to-Speech (TTS).
+
 5. **Belonging & Multilingual Engine**:
    - 100% full translation coverage for **Nepali (नेपाली), Hindi (हिंदी), Bengali (বাংলা), and English** across all UI strings, guides, and AI risk outputs.
    - **Sunlight High-Contrast Mode** optimized for low-end mobile screens under harsh mountain sunlight.
 
 ---
 
-## 🤖 On-Device AI Architecture & Google Gemma Setup
+## 🤖 Tiered On-Device AI Architecture
 
-PaharRakshak integrates Google's open **Gemma** models alongside the Chrome Prompt API and offline semantic fallback matrix:
+PaharRakshak uses a tiered offline architecture designed to operate seamlessly across both presenter laptops and low-end field mobile phones:
 
-| Layer | Technology | Role | Fallback Behavior |
+| Tier | Technology | Target Environment | Capabilities |
 |---|---|---|---|
-| **Tier 1 (Local Gemma)** | **Google Gemma (`gemma4:e4b`, `gemma3:4b`, `gemma2:2b`, `codegemma:2b`)** via Local Runner (Ollama `http://localhost:11434`) | High-fidelity local conversational reasoning, RAG synthesis & slope risk narration | Shifts to Tier 2 if runner is inactive |
-| **Tier 2 (Browser AI)** | **Chrome Built-in Prompt API (`window.ai` / Gemini Nano)** | Direct in-browser on-device LLM | Automatically shifts to Tier 3 if not present |
-| **Tier 3 (Vision & Geology)** | **HTML5 Canvas Pixel Luminance & Edge Strain Matrix** | Slope moisture saturation & tension crack detection | Extracts texture gradient & edge variance locally |
-| **Tier 4 (Local NLP Matrix)** | **Embedded Semantic Disaster Reasoning Engine & Local RAG** | Deterministic hazard risk categorization, localized action steps, corridor summarization | **Zero external server calls, 100% uptime guaranteed in Airplane Mode** |
+| **Tier 1 (Emergency Node / Presenter Laptop)** | **Google Gemma 2 (2B) / Gemma 3 / Gemma 4** via Local Runner (Ollama loopback `http://127.0.0.1:11434`) | Laptop / Emergency Control Node / Local Host | High-fidelity local conversational reasoning, situational RAG synthesis, dynamic risk analysis. |
+| **Tier 2 (Modern Mobile Browser)** | **Chrome Built-in Prompt API (`window.ai` / Gemini Nano)** | Android / Chrome Canary on supported devices | On-device generative responses without local server daemons. |
+| **Tier 3 (Algorithmic On-Device AI)** | **Client-Side Sobel Edge Filters, Color Metrics & Spatio-Temporal Mesh Clustering** | All Mobile & Desktop Browsers (100% universal) | Automated photo hazard classification, tension crack strain index, and road report deduplication. |
+| **Tier 4 (Embedded Local RAG Matrix)** | **Local Knowledge Base & Haversine Geo-spatial Search** | All Devices (100% Offline) | Grounded emergency triage, distance-ranked hospital finder, and multi-language safety action steps. |
+
+> **Design Decision**: On standard field smartphones in airplane mode without Ollama or Chrome experimental flags, Tier 3 (Sobel Vision Classifier & Spatio-Temporal Deduplication) and Tier 4 (Embedded RAG & Geo Search) execute locally with zero latency, ensuring no user is ever left stranded. When connected to a local emergency station running Gemma, Tier 1 is activated automatically.
 
 ---
 
-### 📦 Gemma Offline Model Setup (GDG Siliguri Guidelines)
+## 📦 Gemma Offline Model Setup
 
-Complete this setup on your laptop before boarding or entering zero-connectivity zones:
+Complete this setup to run Google Gemma locally on your presenting laptop:
 
 #### 1. Windows Setup (PowerShell / Winget)
 ```powershell
-# 1. Install Ollama local runner
+# 1. Install Ollama runner
 winget install Ollama.Ollama
 
 # 2. Pull the recommended Google Gemma model
-ollama run gemma2:2b   # or gemma3:4b / gemma4:e4b
+ollama run gemma2:2b
 
 # 3. Launch with browser CORS enabled (in a separate terminal)
 $env:OLLAMA_ORIGINS="*" ; ollama serve
@@ -73,77 +81,67 @@ ollama run gemma2:2b
 OLLAMA_ORIGINS="*" ollama serve
 ```
 
-#### Recommended Model by Hardware:
-- **8 GB RAM (Standard Laptops):** `gemma2:2b`, `gemma3:4b`, `gemma4:e4b`, `codegemma:2b`
-- **16 GB+ RAM (Pro Laptops):** `gemma3:12b`, `gemma4:12b`, `codegemma:7b`
-
----
-
-### 📱 Minimum Device Tested On
-- **Minimum Hardware**: 2 GB RAM, Dual-Core Processor, 50 MB Free Storage.
-- **Browsers**: Chrome 115+, Firefox 115+, Safari 16+, Edge 115+, or any modern PWA-compliant browser on Android/iOS/Windows/Linux/macOS.
-- **Tested Environment**: Tested live in **Airplane Mode** (zero Wi-Fi, zero cellular data).
-
 ---
 
 ## 🚀 Live Demo & Offline Testing (Airplane Mode Pass)
 
 ### 1. Local Run
-To run the PWA locally:
 ```bash
-# Using Python
-python -m http.server 8000
+# Using Python static server:
+python -m http.server 8080
 
-# Or using any static file server / VS Code Live Server
-# Open http://localhost:8000 in your browser
+# Open http://localhost:8080 in your browser
 ```
 
 ### 2. Airplane Mode Demo Steps
-1. Open the web app while connected once (to let the Service Worker cache all assets).
+1. Open the web app once to allow the Service Worker (`sw.js`) to cache all assets, icons, and datasets.
 2. **Turn on Airplane Mode** on your device or disconnect Wi-Fi.
-3. Refresh the page: notice the app loads instantaneously from the Service Worker cache.
-4. Navigate through all 4 tabs:
-   - **Slope Reporter (B1)**: Snap a photo or select an image -> Select hazard -> Click **"Analyze with On-Device AI"** -> View risk explanation and verify report is stored in the offline IndexedDB queue.
-   - **Road Mesh (B6)**: Log a blockage on NH-55 -> Observe on-device AI updating the Route Status Board.
-   - **Hills Assistant (B7)**: Type an emergency question (e.g., *"How to purify water?"*) -> Get grounded advice from the local knowledge base -> Check distance to nearest PHC/hospital.
-   - **P2P Relay (B1/B6)**: Broadcast an emergency warning -> Generate the optical QR beacon -> Ingest alert on another device.
-   - **Language Toggle**: Switch between Nepali, Hindi, Bengali, and English to see live localized UI and guidance.
-   - **Sunlight Contrast**: Toggle the sunlight high-contrast mode for outdoor readability.
+3. Refresh the page: the app loads instantaneously from the Service Worker cache with zero network errors.
+4. Test the unified features:
+   - **Slope Reporter (B1)**: Snap or upload a slope photo -> Notice the **⚡ AI Vision Classifier** automatically detect the hazard (e.g. Tension Crack) with confidence score -> Click **"Analyze with On-Device AI"** -> View the localized risk note and verify offline IndexedDB queuing.
+   - **Road Mesh (B6)**: Log multiple reports for the same corridor (e.g., NH-55 Paglajhora) -> Notice the **Spatio-Temporal Deduplicator** merge them into a single incident with witness confirmation counts.
+   - **Hills Assistant (B7)**: Ask an emergency question (e.g., *"Where is the nearest hospital?"*) -> View grounded RAG advice and distance-ranked medical centers sorted by your current GPS coordinates.
+   - **P2P Relay**: Generate a real ISO QR code beacon and scan it with a second phone camera or optical scanner.
+   - **Sunlight Contrast**: Toggle the high-contrast view for direct outdoor visibility.
+   - **Language Toggle**: Switch between **Nepali, Hindi, Bengali, and English**.
 
 ---
 
 ## 📂 File Structure
 ```
-Code_for_Communities/
+PaharRakshak/
 ├── index.html                   # Master responsive PWA shell with 4 tabs
 ├── manifest.json                # PWA web app manifest
-├── sw.js                        # Service worker with offline cache-first strategy
+├── sw.js                        # Cache-first offline service worker
+├── netlify.toml                 # Netlify PWA deployment & MIME headers
 ├── styles/
 │   └── main.css                 # Glassmorphic mountain theme + sunlight high-contrast mode
 ├── js/
 │   ├── app.js                   # Application orchestrator & tab state manager
+│   ├── utils.js                 # Safe HTML escaping, Levenshtein distance & fuzzy string matching
 │   ├── i18n.js                  # 4-language translation dictionary (EN, NE, HI, BN)
 │   ├── db.js                    # IndexedDB persistent offline storage
-│   ├── ai-engine.js             # Unified on-device AI reasoning & local RAG engine
-│   ├── vision-analyzer.js       # Client-side canvas slope vision analyzer
-│   ├── landslide-reporter.js    # B1 Landslide reporter & queue
-│   ├── road-mesh.js             # B6 Road status mesh & route status board
-│   ├── disaster-guide.js        # B7 Emergency RAG assistant & shelter GPS locator
-│   └── peer-relay.js            # B1/B6 P2P alert relay, optical QR beacon & audio siren
+│   ├── ai-engine.js             # Multi-tier AI engine (Ollama Gemma, Chrome Prompt API, Local RAG)
+│   ├── vision-analyzer.js       # Sobel edge gradient & color hazard vision classifier
+│   ├── qr-codec.js              # Standalone ISO/IEC 18004 QR encoder with Reed-Solomon ECC
+│   ├── landslide-reporter.js    # B1 Landslide reporter & queue with auto-classification
+│   ├── road-mesh.js             # B6 Road mesh with spatio-temporal deduplication
+│   ├── disaster-guide.js        # B7 Emergency RAG assistant & Haversine shelter locator
+│   └── peer-relay.js            # P2P alert relay, optical QR beacon & camera scanner
 └── assets/
     ├── icons/
     │   ├── icon-192.svg         # 192x192 SVG App Icon
     │   └── icon-512.svg         # 512x512 SVG App Icon
     └── data/
-        ├── shelters.json        # Curated PHCs, hospitals & shelters with GPS coordinates
-        └── emergency-kb.json    # 12+ hill emergency verified guidance articles
+        ├── shelters.json        # 10 real PHCs, hospitals & shelters with coordinates
+        └── emergency-kb.json    # 12 hill emergency verified guidance articles (4 languages)
 ```
 
 ---
 
-## 🏆 Hackathon Alignment Summary
+## 🏆 Hackathon Rubric Alignment
 - **Works Offline (25%)**: 100% functionality in Airplane Mode with Service Worker caching and IndexedDB.
-- **Usefulness to the Hills (25%)**: Direct real-world utility for walkers (slope reporter), drivers (road mesh), and stranded citizens (disaster assistant & PHC locator).
-- **On-Device AI Done Well (20%)**: Multi-tiered AI with local RAG, automated corridor clustering, and zero-fail local fallbacks.
-- **Craft (15%)**: Ultra-lightweight zero-bloat bundle, fast cold load, sunlight high-contrast toggle, sound horn.
+- **Usefulness to the Hills (25%)**: Direct real-world utility for pedestrians (slope reporter), drivers (road mesh), and isolated citizens (disaster assistant & PHC locator).
+- **On-Device AI Done Well (20%)**: Multi-tiered AI with local Gemma 2 (2B) integration, client-side Sobel vision classification, and spatio-temporal road report deduplication.
+- **Craft (15%)**: Zero-bloat vanilla architecture, fast cold start, sunlight high-contrast toggle, sound horn, and standard QR camera scanning.
 - **Belonging (15%)**: Authentic Himalayan context (NH-55, Rohini, Paglajhora, Tindharia DHR) and full 4-language support (**Nepali, Hindi, Bengali, English**).

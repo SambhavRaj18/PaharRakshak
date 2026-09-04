@@ -7,8 +7,10 @@ import { t, getLanguage } from './i18n.js';
 import { VisionAnalyzer } from './vision-analyzer.js';
 import { aiEngine } from './ai-engine.js';
 import { saveSlopeReport, getAllSlopeReports, syncAllPendingReports, clearAllSlopeReports } from './db.js';
+import { escapeHtml } from './utils.js';
 
 let currentPhotoDataUrl = null;
+let currentVisionAnalysis = null;
 let videoStream = null;
 
 export function initLandslideReporter() {
@@ -44,8 +46,8 @@ export function initLandslideReporter() {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (ev) => {
-          setPhotoPreview(ev.target.result);
+        reader.onload = async (ev) => {
+          await setPhotoPreviewAndClassify(ev.target.result);
         };
         reader.readAsDataURL(file);
       }
@@ -73,7 +75,7 @@ export function initLandslideReporter() {
     clearBtn.addEventListener('click', async () => {
       if (confirm(getLanguage() === 'ne' ? 'सबै रिपोर्टहरू मेटाउन चाहनुहुन्छ?' :
                   getLanguage() === 'hi' ? 'क्या आप सभी रिपोर्ट हटाना चाहते हैं?' :
-                  getLanguage() === 'bn' ? 'সব রিপোর্ট মুছে ফেলতে চান?' :
+                  getLanguage() === 'bn' ? 'সব रिपोर्ट মুছে ফেলতে চান?' :
                   'Are you sure you want to clear all stored reports?')) {
         await clearAllSlopeReports();
         await renderSlopeReportQueue();
@@ -110,15 +112,15 @@ async function startCamera(videoElem) {
   }
 }
 
-function snapPhoto(videoElem) {
+async function snapPhoto(videoElem) {
   const canvas = document.createElement('canvas');
   canvas.width = videoElem.videoWidth || 640;
   canvas.height = videoElem.videoHeight || 480;
   const ctx = canvas.getContext('2d');
   ctx.drawImage(videoElem, 0, 0, canvas.width, canvas.height);
   const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-  setPhotoPreview(dataUrl);
   stopCamera();
+  await setPhotoPreviewAndClassify(dataUrl);
 }
 
 function stopCamera() {
@@ -130,24 +132,58 @@ function stopCamera() {
   if (container) container.classList.add('hidden');
 }
 
-function setPhotoPreview(dataUrl) {
+async function setPhotoPreviewAndClassify(dataUrl) {
   currentPhotoDataUrl = dataUrl;
   const previewImg = document.getElementById('photo-preview-img');
   const previewContainer = document.getElementById('photo-preview-card');
+  const hazardTypeSelect = document.getElementById('select-hazard-type');
+  
   if (previewImg && previewContainer) {
     previewImg.src = dataUrl;
     previewContainer.classList.remove('hidden');
+  }
+
+  // Run On-Device Sobel & Feature Vision Classifier
+  try {
+    currentVisionAnalysis = await VisionAnalyzer.analyzeImage(dataUrl);
+    
+    // Auto-select predicted hazard in dropdown
+    if (hazardTypeSelect && currentVisionAnalysis.predictedHazard) {
+      hazardTypeSelect.value = currentVisionAnalysis.predictedHazard;
+    }
+
+    // Render / update dynamic AI Vision Badge on preview card
+    let aiBadge = document.getElementById('ai-vision-classification-badge');
+    if (!aiBadge && previewContainer) {
+      aiBadge = document.createElement('div');
+      aiBadge.id = 'ai-vision-classification-badge';
+      previewContainer.appendChild(aiBadge);
+    }
+
+    if (aiBadge) {
+      const hazardLabel = t(currentVisionAnalysis.predictedHazard) || currentVisionAnalysis.predictedHazard;
+      aiBadge.className = 'ai-vision-badge card animate-fade-in';
+      aiBadge.style.cssText = 'margin-top: 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); padding: 10px 14px; border-radius: 8px; font-size: 0.82rem;';
+      aiBadge.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+          <strong style="color: #6ee7b7;">⚡ AI Vision Classifier: ${escapeHtml(hazardLabel)}</strong>
+          <span class="badge badge-synced" style="font-size: 0.72rem;">${currentVisionAnalysis.confidenceScore}% Confidence</span>
+        </div>
+        <p style="color: var(--text-dim); margin: 0; font-size: 0.78rem;">${escapeHtml(currentVisionAnalysis.classificationRationale)}</p>
+      `;
+    }
+  } catch (err) {
+    console.warn('Vision classification notice:', err);
   }
 }
 
 async function processAndSaveReport() {
   const hazardTypeSelect = document.getElementById('select-hazard-type');
   const notesInput = document.getElementById('input-report-notes');
-  const resultCard = document.getElementById('ai-analysis-result-card');
   const analyzeBtn = document.getElementById('btn-analyze-report');
 
   const hazardType = hazardTypeSelect.value;
-  const notes = notesInput.value;
+  const notes = notesInput.value.trim();
 
   // Show loading indicator
   if (analyzeBtn) {
@@ -155,9 +191,16 @@ async function processAndSaveReport() {
     analyzeBtn.innerText = t('analyzingText');
   }
 
-  // 1. Analyze vision metrics if photo is present
-  let visionData = { thumbnail: null, moistureIndex: 45, crackFissureDensity: 50 };
-  if (currentPhotoDataUrl) {
+  // 1. Vision metrics
+  let visionData = currentVisionAnalysis || {
+    thumbnail: null,
+    moistureIndex: 45,
+    crackFissureDensity: 50,
+    confidenceScore: 75,
+    predictedHazard: hazardType
+  };
+
+  if (currentPhotoDataUrl && !currentVisionAnalysis) {
     visionData = await VisionAnalyzer.analyzeImage(currentPhotoDataUrl);
   }
 
@@ -165,7 +208,7 @@ async function processAndSaveReport() {
   const aiResult = await aiEngine.explainSlopeRisk(hazardType, notes, visionData);
 
   // 3. Get current location coordinates if available
-  let coordinates = { lat: 27.0360, lng: 88.2627, locationName: 'Darjeeling Hill Stretch' };
+  let coordinates = { lat: 27.0360, lng: 88.2627, locationName: 'Darjeeling Hill Corridor' };
   try {
     if (navigator.geolocation) {
       const pos = await new Promise((res, rej) => {
@@ -193,6 +236,7 @@ async function processAndSaveReport() {
     coordinates,
     moistureIndex: visionData.moistureIndex,
     crackFissureDensity: visionData.crackFissureDensity,
+    confidenceScore: visionData.confidenceScore || 75,
     syncStatus: navigator.onLine ? 'synced' : 'queued',
     timestamp: Date.now()
   };
@@ -222,11 +266,11 @@ function displayAiResultCard(report) {
   resultCard.innerHTML = `
     <div class="card result-banner animate-fade-in">
       <div class="result-header">
-        <span class="badge ${severityBadgeClass}">⚠️ ${report.riskLevel} SEVERITY</span>
+        <span class="badge ${severityBadgeClass}">⚠️ ${escapeHtml(report.riskLevel)} SEVERITY</span>
         <span class="badge badge-queued">${report.syncStatus === 'synced' ? '🟢 ' + t('syncedBadge') : '🟠 ' + t('queuedBadge')}</span>
       </div>
-      <h3 class="result-title">${report.riskTitle}</h3>
-      <p class="result-explanation">${report.riskExplanation}</p>
+      <h3 class="result-title">${escapeHtml(report.riskTitle)}</h3>
+      <p class="result-explanation">${escapeHtml(report.riskExplanation)}</p>
       
       <div class="vision-metrics-row">
         <div class="metric-box">
@@ -242,7 +286,7 @@ function displayAiResultCard(report) {
       <div class="action-steps-box">
         <h4>📋 Recommended Next Actions:</h4>
         <ul class="action-list">
-          ${report.actionSteps.map(step => `<li>${step}</li>`).join('')}
+          ${report.actionSteps.map(step => `<li>${escapeHtml(step)}</li>`).join('')}
         </ul>
       </div>
     </div>
@@ -276,18 +320,18 @@ export async function renderSlopeReportQueue() {
     return `
       <div class="report-queue-item card">
         <div class="item-header">
-          <span class="badge ${severityBadgeClass}">${r.riskLevel}</span>
+          <span class="badge ${severityBadgeClass}">${escapeHtml(r.riskLevel)}</span>
           <span class="badge ${isSynced ? 'badge-synced' : 'badge-queued'}">${isSynced ? t('syncedBadge') : t('queuedBadge')}</span>
-          <span class="item-time">🕒 ${dateStr}</span>
+          <span class="item-time">🕒 ${escapeHtml(dateStr)}</span>
         </div>
 
         <div class="item-body">
           ${r.thumbnail ? `<img src="${r.thumbnail}" class="item-thumbnail" alt="Slope observation" />` : ''}
           <div class="item-content">
-            <h4 class="item-title">${r.riskTitle || t(r.hazardType)}</h4>
-            <p class="item-note">${r.riskExplanation || r.userNotes || 'No additional note'}</p>
+            <h4 class="item-title">${escapeHtml(r.riskTitle || t(r.hazardType))}</h4>
+            <p class="item-note">${escapeHtml(r.riskExplanation || r.userNotes || 'No additional note')}</p>
             <div class="item-meta">
-              <span>📍 ${r.coordinates ? r.coordinates.locationName : 'Darjeeling Hill'}</span>
+              <span>📍 ${escapeHtml(r.coordinates ? r.coordinates.locationName : 'Darjeeling Hill')}</span>
             </div>
           </div>
         </div>
