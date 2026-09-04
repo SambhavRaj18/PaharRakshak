@@ -7,7 +7,7 @@ import { t, setLanguage, getLanguage, translations } from './i18n.js';
 import { initLandslideReporter, renderSlopeReportQueue } from './landslide-reporter.js';
 import { initRoadMesh, renderRoadMesh } from './road-mesh.js';
 import { initDisasterGuide, renderGuidanceArticles, renderSheltersList } from './disaster-guide.js';
-import { initPeerRelay, renderRelayedAlerts, triggerEmergencySiren } from './peer-relay.js';
+import { initPeerRelay, renderRelayedAlerts } from './peer-relay.js';
 import { syncAllPendingReports } from './db.js';
 import { aiEngine } from './ai-engine.js';
 
@@ -31,21 +31,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 6. Setup Gemma AI Setup Modal & Status Pill
   setupAiStatusAndModal();
 
-  // 7. Setup Emergency Horn Button
-  const hornBtn = document.getElementById('global-horn-btn');
-  if (hornBtn) {
-    hornBtn.addEventListener('click', () => {
-      triggerEmergencySiren();
-    });
-  }
-
-  // 8. Initialize Feature Modules
+  // 7. Initialize Feature Modules
   initLandslideReporter();
   initRoadMesh();
   await initDisasterGuide();
   initPeerRelay();
 
-  // 9. Apply Initial Localized Strings
+  // 8. Apply Initial Localized Strings
   updateAllTranslations();
 });
 
