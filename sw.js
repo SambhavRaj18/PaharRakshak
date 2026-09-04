@@ -3,7 +3,7 @@
 // Cache-First Strategy for 100% Offline Airplane Mode Execution
 // =========================================================================
 
-const CACHE_NAME = 'pahar-rakshak-v1.1.0';
+const CACHE_NAME = 'pahar-rakshak-v1.2.0';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -24,7 +24,11 @@ const ASSETS_TO_CACHE = [
   './assets/data/shelters.json',
   './assets/data/emergency-kb.json',
   './assets/icons/icon-192.svg',
-  './assets/icons/icon-512.svg'
+  './assets/icons/icon-512.svg',
+  './assets/icons/icon-192.png',
+  './assets/icons/icon-512.png',
+  './assets/icons/icon-maskable-192.png',
+  './assets/icons/icon-maskable-512.png'
 ];
 
 self.addEventListener('install', (event) => {

@@ -12,8 +12,9 @@ import { syncAllPendingReports } from './db.js';
 import { aiEngine } from './ai-engine.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // 1. Setup Service Worker
+  // 1. Setup Service Worker & PWA Install Prompt
   registerServiceWorker();
+  setupPwaInstallPrompt();
 
   // 2. Setup Language Switcher
   setupLanguageSwitcher();
@@ -297,3 +298,41 @@ export function updateAllTranslations() {
     }
   });
 }
+
+let deferredInstallPrompt = null;
+
+function setupPwaInstallPrompt() {
+  const installBtn = document.getElementById('btn-install-pwa');
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredInstallPrompt = e;
+    console.log('📲 PWA install prompt ready.');
+    
+    if (installBtn) {
+      installBtn.classList.remove('hidden');
+    }
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        deferredInstallPrompt = null;
+        installBtn.classList.add('hidden');
+      } else {
+        alert('To install PaharRakshak on your device:\n\n• Chrome/Edge: Click the install icon in the URL address bar or Menu (⋮) -> "Install App".\n• iOS Safari: Tap Share -> "Add to Home Screen".');
+      }
+    });
+  }
+
+  window.addEventListener('appinstalled', () => {
+    console.log('✅ PaharRakshak PWA was successfully installed.');
+    if (installBtn) installBtn.classList.add('hidden');
+  });
+}
+
