@@ -1,0 +1,26 @@
+{
+  "models": [
+    {
+      "title": "Google Gemma 2 (2B Local)",
+      "provider": "ollama",
+      "model": "gemma2:2b"
+    },
+    {
+      "title": "Google Gemma 3 (4B Local)",
+      "provider": "ollama",
+      "model": "gemma3:4b"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "CodeGemma 2B",
+    "provider": "ollama",
+    "model": "codegemma:2b"
+  },
+  "customCommands": [
+    {
+      "name": "himalayan-audit",
+      "prompt": "Audit this code for 100% offline Himalayan disaster reliability, Airplane Mode resilience, and low-latency execution.",
+      "description": "Audit code for offline disaster safety"
+    }
+  ]
+}
