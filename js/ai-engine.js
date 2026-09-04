@@ -459,9 +459,9 @@ class AIEngine {
   }
 
   // -------------------------------------------------------------
-  // B7: Local RAG Q&A grounded in emergency knowledge base
+  // B7: Local RAG Q&A grounded in emergency knowledge base & spatial shelters
   // -------------------------------------------------------------
-  async queryEmergencyKnowledgeBase(query, knowledgeBase) {
+  async queryEmergencyKnowledgeBase(query, knowledgeBase, sheltersData = [], userLocation = null) {
     const lang = getLanguage();
     const cleanQuery = query.toLowerCase().trim();
 
@@ -471,8 +471,31 @@ class AIEngine {
                 lang === 'hi' ? 'कृपया अपना आपातकालीन प्रश्न दर्ज करें।' :
                 lang === 'bn' ? 'অনুগ্রহ করে আপনার জরুরি প্রশ্নটি লিখুন।' :
                 'Please enter an emergency question.',
-        matchedArticle: null
+        matchedArticle: null,
+        backend: this.getActiveBackendName()
       };
+    }
+
+    // Check if query is looking for nearest hospital / shelter / clinic
+    const isHospitalQuery = cleanQuery.includes('hospital') || cleanQuery.includes('phc') || 
+                            cleanQuery.includes('clinic') || cleanQuery.includes('shelter') ||
+                            cleanQuery.includes('अस्पताल') || cleanQuery.includes('হাসপাতাল') ||
+                            cleanQuery.includes('nearest') || cleanQuery.includes('कहाँ छ') || cleanQuery.includes('कहा है');
+
+    let spatialContext = '';
+    if (isHospitalQuery && sheltersData && sheltersData.length > 0 && userLocation) {
+      const sorted = [...sheltersData].map(s => {
+        const dLat = (s.lat - userLocation.lat) * (Math.PI / 180);
+        const dLon = (s.lng - userLocation.lng) * (Math.PI / 180);
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                  Math.cos(userLocation.lat * (Math.PI / 180)) * Math.cos(s.lat * (Math.PI / 180)) *
+                  Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const distKm = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return { ...s, distKm };
+      }).sort((a, b) => a.distKm - b.distKm);
+
+      const top3 = sorted.slice(0, 3);
+      spatialContext = top3.map(h => `- ${h.name} (${h.type}): ${h.distKm.toFixed(1)} km away at ${h.address} (Contact: ${h.contact})`).join('\n');
     }
 
     // Semantic keyword scoring for offline RAG
@@ -496,35 +519,44 @@ class AIEngine {
     }
 
     if (!bestMatch || highestScore === 0) {
-      // General Hill Disaster Advice fallback
       bestMatch = knowledgeBase[0]; // Landslide default
     }
 
     const title = bestMatch[`title_${lang}`] || bestMatch.title_en;
     const steps = bestMatch[`steps_${lang}`] || bestMatch.steps_en;
 
-    let formattedAnswer = `**${title}**\n\n`;
+    let formattedAnswer = '';
+
+    if (spatialContext) {
+      formattedAnswer += `🏥 **Nearest Health Facilities & Emergency Centres:**\n${spatialContext}\n\n`;
+    }
+
+    formattedAnswer += `📋 **${title}**\n\n`;
     steps.forEach((step, idx) => {
       formattedAnswer += `${idx + 1}. ${step}\n`;
     });
 
-    // Optional: If Gemma / Chrome AI is connected, run generative reasoning grounded in RAG context
+    // If Gemma / Chrome AI is connected, run generative reasoning grounded in RAG context
+    let generatedAiNote = '';
     if (this.hasOllama || this.hasChromeAi) {
       try {
-        const ragContext = `${title}\n${steps.join('. ')}`;
-        const prompt = `User in Himalayan disaster asks: "${query}". Answer briefly (2-3 sentences) in ${lang === 'ne' ? 'Nepali' : lang === 'hi' ? 'Hindi' : lang === 'bn' ? 'Bengali' : 'English'} strictly based on this safety guidance:\n${ragContext}`;
+        const ragContext = `${title}\n${steps.join('. ')}\n${spatialContext ? 'Nearby facilities:\n' + spatialContext : ''}`;
+        const prompt = `You are the PaharRakshak Himalayan Emergency AI. User asks: "${query}". Answer directly in 2-3 sentences in ${lang === 'ne' ? 'Nepali' : lang === 'hi' ? 'Hindi' : lang === 'bn' ? 'Bengali' : 'English'} strictly using this context:\n${ragContext}`;
         const aiAnswer = await this.generateText(prompt);
         if (aiAnswer && aiAnswer.trim().length > 15 && !aiAnswer.includes('[On-Device AI Output]')) {
-          formattedAnswer = `**${title}**\n\n${aiAnswer.trim()}\n\n*Standard Protocol Steps:*\n` + steps.map((s, i) => `${i + 1}. ${s}`).join('\n');
+          generatedAiNote = aiAnswer.trim();
+          formattedAnswer = `🧠 **${this.getActiveBackendName()} Assessment:**\n${generatedAiNote}\n\n` + formattedAnswer;
         }
       } catch (e) {
-        // Fallback gracefully to standard template
+        // Fallback gracefully
       }
     }
 
     return {
       answer: formattedAnswer,
-      matchedArticle: bestMatch
+      matchedArticle: bestMatch,
+      backend: this.getActiveBackendName(),
+      hasGenAi: !!generatedAiNote
     };
   }
 
