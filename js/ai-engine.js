@@ -459,7 +459,7 @@ class AIEngine {
   }
 
   // -------------------------------------------------------------
-  // B7: Local RAG Q&A grounded in emergency knowledge base & spatial shelters
+  // B7: Local Generative RAG Q&A grounded in emergency knowledge base & spatial shelters
   // -------------------------------------------------------------
   async queryEmergencyKnowledgeBase(query, knowledgeBase, sheltersData = [], userLocation = null) {
     const lang = getLanguage();
@@ -476,14 +476,21 @@ class AIEngine {
       };
     }
 
-    // Check if query is looking for nearest hospital / shelter / clinic
+    // Always ensure fresh connection check
+    if (!this.hasOllama) {
+      await this.checkOllama();
+    }
+
+    // 1. Spatial context for hospitals/shelters
     const isHospitalQuery = cleanQuery.includes('hospital') || cleanQuery.includes('phc') || 
                             cleanQuery.includes('clinic') || cleanQuery.includes('shelter') ||
+                            cleanQuery.includes('doctor') || cleanQuery.includes('medical') ||
                             cleanQuery.includes('अस्पताल') || cleanQuery.includes('হাসপাতাল') ||
                             cleanQuery.includes('nearest') || cleanQuery.includes('कहाँ छ') || cleanQuery.includes('कहा है');
 
     let spatialContext = '';
-    if (isHospitalQuery && sheltersData && sheltersData.length > 0 && userLocation) {
+    let closestFacility = null;
+    if (sheltersData && sheltersData.length > 0 && userLocation) {
       const sorted = [...sheltersData].map(s => {
         const dLat = (s.lat - userLocation.lat) * (Math.PI / 180);
         const dLon = (s.lng - userLocation.lng) * (Math.PI / 180);
@@ -494,11 +501,12 @@ class AIEngine {
         return { ...s, distKm };
       }).sort((a, b) => a.distKm - b.distKm);
 
-      const top3 = sorted.slice(0, 3);
-      spatialContext = top3.map(h => `- ${h.name} (${h.type}): ${h.distKm.toFixed(1)} km away at ${h.address} (Contact: ${h.contact})`).join('\n');
+      closestFacility = sorted[0];
+      const topList = sorted.slice(0, 3);
+      spatialContext = topList.map(h => `- ${h.name} (${h.type}): ${h.distKm.toFixed(1)} km away at ${h.address} | Contact: ${h.contact} | ${h.beds} beds`).join('\n');
     }
 
-    // Semantic keyword scoring for offline RAG
+    // 2. Semantic matching over knowledge base
     let bestMatch = null;
     let highestScore = 0;
 
@@ -518,45 +526,69 @@ class AIEngine {
       }
     }
 
-    if (!bestMatch || highestScore === 0) {
-      bestMatch = knowledgeBase[0]; // Landslide default
+    const langName = lang === 'ne' ? 'Nepali' : lang === 'hi' ? 'Hindi' : lang === 'bn' ? 'Bengali' : 'English';
+    let ragGuidance = '';
+    let matchTitle = '';
+    if (bestMatch && highestScore > 0) {
+      matchTitle = bestMatch[`title_${lang}`] || bestMatch.title_en;
+      const steps = bestMatch[`steps_${lang}`] || bestMatch.steps_en;
+      ragGuidance = `${matchTitle}:\n` + steps.map((s, i) => `${i + 1}. ${s}`).join('\n');
     }
 
-    const title = bestMatch[`title_${lang}`] || bestMatch.title_en;
-    const steps = bestMatch[`steps_${lang}`] || bestMatch.steps_en;
-
-    let formattedAnswer = '';
-
-    if (spatialContext) {
-      formattedAnswer += `🏥 **Nearest Health Facilities & Emergency Centres:**\n${spatialContext}\n\n`;
-    }
-
-    formattedAnswer += `📋 **${title}**\n\n`;
-    steps.forEach((step, idx) => {
-      formattedAnswer += `${idx + 1}. ${step}\n`;
-    });
-
-    // If Gemma / Chrome AI is connected, run generative reasoning grounded in RAG context
-    let generatedAiNote = '';
+    // 3. Generative Reasoning via Local Gemma / Chrome AI
     if (this.hasOllama || this.hasChromeAi) {
       try {
-        const ragContext = `${title}\n${steps.join('. ')}\n${spatialContext ? 'Nearby facilities:\n' + spatialContext : ''}`;
-        const prompt = `You are the PaharRakshak Himalayan Emergency AI. User asks: "${query}". Answer directly in 2-3 sentences in ${lang === 'ne' ? 'Nepali' : lang === 'hi' ? 'Hindi' : lang === 'bn' ? 'Bengali' : 'English'} strictly using this context:\n${ragContext}`;
-        const aiAnswer = await this.generateText(prompt);
-        if (aiAnswer && aiAnswer.trim().length > 15 && !aiAnswer.includes('[On-Device AI Output]')) {
-          generatedAiNote = aiAnswer.trim();
-          formattedAnswer = `🧠 **${this.getActiveBackendName()} Assessment:**\n${generatedAiNote}\n\n` + formattedAnswer;
+        const systemPrompt = `You are PaharRakshak, an intelligent on-device disaster AI assistant for the Darjeeling and Himalayan mountain belt.
+Answer the user's specific question directly, concisely, and accurately in ${langName}.
+Do not give generic disclaimers. Give actionable, localized answers tailored to mountain survival.`;
+
+        const userPrompt = `User Question: "${query}"
+
+Available Local Data Context:
+${spatialContext ? `[Nearby Emergency Health Centres & Shelters]:\n${spatialContext}\n` : ''}
+${ragGuidance ? `[Official Himalayan Disaster Field Protocol]:\n${ragGuidance}\n` : ''}
+
+Please answer the user's specific question directly based on the local context above:`;
+
+        const aiResponse = await this.generateText(userPrompt, systemPrompt);
+        if (aiResponse && aiResponse.trim().length > 15 && !aiResponse.includes('[On-Device AI Output]')) {
+          let output = aiResponse.trim();
+          if (spatialContext && isHospitalQuery) {
+            output += `\n\n📍 **Nearby Facilities Summary:**\n` + spatialContext;
+          }
+          return {
+            answer: output,
+            matchedArticle: bestMatch,
+            backend: this.getActiveBackendName(),
+            hasGenAi: true
+          };
         }
-      } catch (e) {
-        // Fallback gracefully
+      } catch (err) {
+        console.warn('Gemma generation error, falling back to deterministic template:', err);
       }
     }
 
+    // 4. Deterministic Fallback if LLM is unavailable
+    let fallbackAnswer = '';
+    if (isHospitalQuery && closestFacility) {
+      fallbackAnswer = `🏥 **Nearest Facility:** **${closestFacility.name}** is **${closestFacility.distKm.toFixed(1)} km** away at ${closestFacility.address}.\n📞 Contact: ${closestFacility.contact} (${closestFacility.beds} beds available).\n\n` +
+        `📍 **Other Nearby Centers:**\n${spatialContext}`;
+    } else if (bestMatch && highestScore > 0) {
+      const title = bestMatch[`title_${lang}`] || bestMatch.title_en;
+      const steps = bestMatch[`steps_${lang}`] || bestMatch.steps_en;
+      fallbackAnswer = `📋 **${title}**\n\n` + steps.map((s, i) => `${i + 1}. ${s}`).join('\n');
+    } else {
+      fallbackAnswer = lang === 'ne' ? `तपाईंको प्रश्न: "${query}"। आपतकालीन अवस्थामा नजिकको सुरक्षित सामुदायिक आश्रयमा जानुहोस् र P2P अलर्ट रिले प्रयोग गर्नुहोस्।` :
+                       lang === 'hi' ? `आपका प्रश्न: "${query}"। आपातकाल में निकटतम सुरक्षित आश्रय स्थल पर जाएं और P2P अलर्ट रिले का उपयोग करें।` :
+                       lang === 'bn' ? `আপনার প্রশ্ন: "${query}"। জরুরি পরিস্থিতিতে নিকটস্থ আশ্রয়কেন্দ্রে যান এবং P2P অ্যালার্ট ব্যবহার করুন।` :
+                       `Regarding: "${query}". In an active hill disaster, seek elevated stable ground, stay clear of slope drainage gullies, and notify local ward rescue units.`;
+    }
+
     return {
-      answer: formattedAnswer,
+      answer: fallbackAnswer,
       matchedArticle: bestMatch,
       backend: this.getActiveBackendName(),
-      hasGenAi: !!generatedAiNote
+      hasGenAi: false
     };
   }
 
@@ -566,3 +598,4 @@ class AIEngine {
 }
 
 export const aiEngine = new AIEngine();
+
