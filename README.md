@@ -4,6 +4,30 @@
 
 ---
 
+## 📋 Hackathon Submission Details
+
+| Criterion | Submission Specification |
+|---|---|
+| **Public Live PWA URL** | **[https://sambhavraj18.github.io/PaharRakshak/](https://sambhavraj18.github.io/PaharRakshak/)** (Installs as PWA and works 100% offline after one online load) |
+| **Public Source Repository** | **[https://github.com/SambhavRaj18/PaharRakshak](https://github.com/SambhavRaj18/PaharRakshak)** |
+| **On-Device Model(s) Used** | **1. Google Gemma 2 (2B)** via Local Runner (`gemma2:2b` on Ollama loopback `http://127.0.0.1:11434`)<br>**2. Chrome Built-in Prompt API (Gemini Nano)** (`window.ai.languageModel`)<br>**3. Client-Side Sobel Edge & Gradient Vision Classifier** (`VisionAnalyzer` on Canvas API)<br>**4. Spatio-Temporal Fuzzy Levenshtein Deduplication Engine** (`road-mesh.js`) |
+| **Minimum Device Tested On** | **2 GB RAM, Dual-Core Processor, 50 MB Storage** (Tested on budget Android smartphone & Windows laptop in **Airplane Mode** with zero cellular and zero Wi-Fi) |
+| **What Happens When Model is Unavailable** | **Multi-Tier Zero-Fail Graceful Degradation**:<br>• If Ollama/Gemma is not active, the system checks for Chrome's built-in Gemini Nano.<br>• If no local LLM runtime exists (e.g. standard field mobile in Airplane Mode), the app uses the **Client-Side Sobel Vision Classifier** to auto-detect slope fissures/saturation, the **Spatio-Temporal Deduplicator** to group road reports, and the **Local Embedded RAG Knowledge Matrix** (12 hill disaster guides + 10 geolocated PHCs/hospitals across **Nepali, Hindi, Bengali, English**).<br>• Result: **100% offline uptime, zero network crashes, zero empty screens.** |
+
+---
+
+## 🎥 2-Minute Demo Video Guide (Airplane Mode Visibly ON)
+
+| Time | Action / Feature Demo | What to Highlight on Screen |
+|---|---|---|
+| **0:00 - 0:15** | **Airplane Mode & PWA Cold Start** | Show **Airplane Mode icon visibly ON** in system tray / status bar. Refresh or launch PaharRakshak PWA from home screen / browser cache. |
+| **0:15 - 0:45** | **Module B1: Offline Landslide Reporter** | 1. Snap or select a slope fissure photo.<br>2. Show the **⚡ AI Vision Classifier** automatically detect *Ground Tension Crack* (with confidence score).<br>3. Click **"Analyze with On-Device AI"** to generate localized risk explanation & safety actions.<br>4. Show report stored in persistent offline IndexedDB queue (`queued`). |
+| **0:45 - 1:15** | **Module B6: Road Status Mesh & Deduplication** | 1. Log multiple blockage reports for *NH-55 (Paglajhora)*.<br>2. Show on-device **Spatio-Temporal Deduplicator** merge them into a single incident card with **👥 Witness Confirmation counts** and consensus passability. |
+| **1:15 - 1:40** | **Module B7: Disaster-Ready Hills Assistant & PHC Locator** | 1. Ask emergency query: *"Where is the nearest hospital?"*<br>2. Show grounded RAG response and distance-sorted list of real PHCs/hospitals (Kurseong Sub-Divisional Hospital, Tindharia Block PHC, Darjeeling District Hospital) via Haversine calculation.<br>3. Toggle language between **Nepali (नेपाली), Hindi (हिंदी), Bengali (বাংলা), English**. |
+| **1:40 - 2:00** | **P2P Zero-Network QR Relay & Emergency Horn** | 1. Click **"Transmit Alert Broadcast"** in P2P Relay to display real ISO standard QR beacon.<br>2. Scan via second device camera or simulate scanner.<br>3. Sound the **Emergency Horn** audio siren. |
+
+---
+
 ## 📌 Project Overview
 **PaharRakshak** is a unified, 100% offline civic Progressive Web App (PWA) engineered specifically for the Darjeeling Himalayan Railway (DHR) corridor and vulnerable mountain communities. During severe monsoon cloudbursts and landslides (such as the October 2025 disaster where >300 mm of rain severed communication), cell towers and power grids routinely fail.
 
@@ -47,8 +71,6 @@ PaharRakshak uses a tiered offline architecture designed to operate seamlessly a
 | **Tier 3 (Algorithmic On-Device AI)** | **Client-Side Sobel Edge Filters, Color Metrics & Spatio-Temporal Mesh Clustering** | All Mobile & Desktop Browsers (100% universal) | Automated photo hazard classification, tension crack strain index, and road report deduplication. |
 | **Tier 4 (Embedded Local RAG Matrix)** | **Local Knowledge Base & Haversine Geo-spatial Search** | All Devices (100% Offline) | Grounded emergency triage, distance-ranked hospital finder, and multi-language safety action steps. |
 
-> **Design Decision**: On standard field smartphones in airplane mode without Ollama or Chrome experimental flags, Tier 3 (Sobel Vision Classifier & Spatio-Temporal Deduplication) and Tier 4 (Embedded RAG & Geo Search) execute locally with zero latency, ensuring no user is ever left stranded. When connected to a local emergency station running Gemma, Tier 1 is activated automatically.
-
 ---
 
 ## 📦 Gemma Offline Model Setup
@@ -83,27 +105,19 @@ OLLAMA_ORIGINS="*" ollama serve
 
 ---
 
-## 🚀 Live Demo & Offline Testing (Airplane Mode Pass)
+## 🚀 Local Run & PWA Offline Verification
 
-### 1. Local Run
 ```bash
-# Using Python static server:
+# Start local static server
 python -m http.server 8080
 
-# Open http://localhost:8080 in your browser
+# Open in browser
+http://localhost:8080
 ```
 
-### 2. Airplane Mode Demo Steps
-1. Open the web app once to allow the Service Worker (`sw.js`) to cache all assets, icons, and datasets.
-2. **Turn on Airplane Mode** on your device or disconnect Wi-Fi.
-3. Refresh the page: the app loads instantaneously from the Service Worker cache with zero network errors.
-4. Test the unified features:
-   - **Slope Reporter (B1)**: Snap or upload a slope photo -> Notice the **⚡ AI Vision Classifier** automatically detect the hazard (e.g. Tension Crack) with confidence score -> Click **"Analyze with On-Device AI"** -> View the localized risk note and verify offline IndexedDB queuing.
-   - **Road Mesh (B6)**: Log multiple reports for the same corridor (e.g., NH-55 Paglajhora) -> Notice the **Spatio-Temporal Deduplicator** merge them into a single incident with witness confirmation counts.
-   - **Hills Assistant (B7)**: Ask an emergency question (e.g., *"Where is the nearest hospital?"*) -> View grounded RAG advice and distance-ranked medical centers sorted by your current GPS coordinates.
-   - **P2P Relay**: Generate a real ISO QR code beacon and scan it with a second phone camera or optical scanner.
-   - **Sunlight Contrast**: Toggle the high-contrast view for direct outdoor visibility.
-   - **Language Toggle**: Switch between **Nepali, Hindi, Bengali, and English**.
+1. Load the page once so the Service Worker (`sw.js`) caches all assets.
+2. Turn on **Airplane Mode**.
+3. Reload and interact with all 4 modules completely offline.
 
 ---
 
@@ -112,7 +126,7 @@ python -m http.server 8080
 PaharRakshak/
 ├── index.html                   # Master responsive PWA shell with 4 tabs
 ├── manifest.json                # PWA web app manifest
-├── sw.js                        # Cache-first offline service worker
+├── sw.js                        # Cache-first offline service worker (v1.1.0)
 ├── netlify.toml                 # Netlify PWA deployment & MIME headers
 ├── styles/
 │   └── main.css                 # Glassmorphic mountain theme + sunlight high-contrast mode
