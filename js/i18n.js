@@ -12,10 +12,10 @@ export const translations = {
     statusOffline: "Offline Mode (IndexedDB Active)",
     
     // Tabs
-    tabReporter: "Slope Reporter (B1)",
-    tabMesh: "Road Mesh (B6)",
-    tabGuide: "Hills Assistant (B7)",
-    tabRelay: "P2P Relay (B1/B6)",
+    tabReporter: "Slope (B1)",
+    tabMesh: "Roads (B6)",
+    tabGuide: "Guide (B7)",
+    tabRelay: "Relay (P2P)",
     
     // B1: Landslide Reporter
     reporterTitle: "Offline Slope Hazard Reporter",
@@ -107,10 +107,10 @@ export const translations = {
     statusOnline: "इन्टरनेट जोडिएको (सिंक चालु)",
     statusOffline: "अफलाइन मोड (IndexedDB सक्रिय)",
     
-    tabReporter: "पहिरो रिपोर्टर (B1)",
-    tabMesh: "सडक मेश (B6)",
-    tabGuide: "आपतकालीन सहायक (B7)",
-    tabRelay: "P2P रिले (B1/B6)",
+    tabReporter: "पहिरो (B1)",
+    tabMesh: "सडक (B6)",
+    tabGuide: "गाइड (B7)",
+    tabRelay: "रिले (P2P)",
     
     reporterTitle: "अफलाइन भित्तो/पहिरो जोखिम रिपोर्टर",
     reporterSubtitle: "पहाडी भित्तो, पर्खाल वा सडकको फोटो खिच्नुहोस्। अन-डिभाइस एआईले जोखिम विश्लेषण गरी अफलाइन भण्डारण गर्दछ।",
@@ -194,10 +194,10 @@ export const translations = {
     statusOnline: "इंटरनेट कनेक्टेड (सिंकिंग चालू)",
     statusOffline: "ऑफलाइन मोड (IndexedDB सक्रिय)",
     
-    tabReporter: "भूस्खलन रिपोर्टर (B1)",
-    tabMesh: "सड़क मेश (B6)",
-    tabGuide: "पहाड़ सहायक (B7)",
-    tabRelay: "P2P रिले (B1/B6)",
+    tabReporter: "भूस्खलन (B1)",
+    tabMesh: "सड़क (B6)",
+    tabGuide: "गाइड (B7)",
+    tabRelay: "रिले (P2P)",
     
     reporterTitle: "ऑफलाइन ढलान व भूस्खलन खतरा रिपोर्टर",
     reporterSubtitle: "पहाड़ी ढलान या दीवार की तस्वीर लें। ऑन-डिवाइस एआई जोखिम का विश्लेषण कर रिपोर्ट ऑफलाइन सहेजता है।",
@@ -281,10 +281,10 @@ export const translations = {
     statusOnline: "ইন্টারনেট সংযুক্ত (সিঙ্ক চালু)",
     statusOffline: "অফলাইন মোড (IndexedDB সক্রিয়)",
     
-    tabReporter: "ভূমিধস রিপোর্টার (B1)",
-    tabMesh: "রোড মেশ (B6)",
-    tabGuide: "পাহাড় সহায়ক (B7)",
-    tabRelay: "P2P রিলে (B1/B6)",
+    tabReporter: "ভূমিধস (B1)",
+    tabMesh: "সড়ক (B6)",
+    tabGuide: "গাইড (B7)",
+    tabRelay: "রিলে (P2P)",
     
     reporterTitle: "অফলাইন ঢাল ও ভূমিধস ঝুঁকি রিপোর্টার",
     reporterSubtitle: "পাহাড়ি ঢাল বা ক্ষতিগ্রস্ত প্রাচীরের ছবি তুলুন। ডিভাইসের এআই ঝুঁকি মূল্যায়ন করে অফলাইনে সংরক্ষণ করবে।",
