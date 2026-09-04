@@ -1,0 +1,470 @@
+[
+  {
+    "id": "kb-01",
+    "category": "Landslide (पहिरो / भूस्खलन / ভূমিধস)",
+    "target_user": "Walker & Resident",
+    "keywords": ["landslide", "pahiro", "slip", "debris", "mudslide", "slope", "crack", "पहिरो", "भूस्खलन", "ভূমিধস"],
+    "title_en": "Immediate Action During a Slope Failure or Landslide",
+    "title_ne": "पहिरो वा भित्तो खस्दा तत्काल गर्नुपर्ने काम",
+    "title_hi": "भूस्खलन या ढलान गिरने पर तत्काल कार्रवाई",
+    "title_bn": "ভূমিধসের সময় তাৎক্ষণিক করণীয়",
+    "severity": "CRITICAL",
+    "steps_en": [
+      "Evacuate laterally (sideways) perpendicular to the path of the landslide. NEVER run downhill in front of moving debris.",
+      "Listen for sudden changes in river/jhora sounds, breaking trees, or cracking boulder noises.",
+      "If trapped inside a hill building, take shelter under sturdy wooden furniture or curl into a tight ball covering your head in an interior corner away from outer valley walls.",
+      "Avoid riverbeds, deep gullies (jhoras), and toe-slopes where debris flow converges.",
+      "Watch out for secondary slips—rainfall keeps slopes unstable for 24-48 hours after the main slide."
+    ],
+    "steps_ne": [
+      "पहिरोको बाटोबाट छेउछाउ (तेर्सो) तर्फ भाग्नुहोस्। खसिरहेको लेदो/ढुङ्गाको अगाडि सिधै ओरालो कहिल्यै नदौडिनुहोस्।",
+      "खोला वा झोड़ाको आवाजमा अचानक आएको परिवर्तन, रूख भाँचिएको वा ढुङ्गा बज्रेको आवाजमा सतर्क रहनुहोस्।",
+      "घरभित्र थुनिएमा बलियो टेबल वा खाटमुनि टाउको छोपेर बस्नुहोस्। बाहिरी भित्ताबाट टाढा रहनुहोस्।",
+      "खोल्सा, खोँच र पहिरोको फेदी क्षेत्रबाट तत्काल सुरक्षित अग्लो स्थानमा जानुहोस्।",
+      "मुख्य पहिरो खसेपछि पनि २४-४८ घण्टासम्म दोस्रो पहिरो खस्ने जोखिम रहन्छ, हतारिएर पहिरो क्षेत्रमा नजानुहोस्।"
+    ],
+    "steps_hi": [
+      "भूस्खलन के बहाव के लंबवत (दाएं या बाएं) सुरक्षित ऊंचाई की ओर जाएं। मलबे के आगे ढलान पर नीचे कभी न दौड़ें।",
+      "झरनों या नालों (झोड़ा) के पानी की आवाज में बदलाव, पेड़ों के टूटने या पत्थरों के टकराने की आवाज पर तुरंत सतर्क हों।",
+      "यदि कमरे में फंस जाएं, तो मजबूत मेज या पलंग के नीचे सिर ढककर बैठें, बाहरी ढलान वाली दीवारों से दूर रहें।",
+      "नालों, खाइयों और पहाड़ी के निचले हिस्सों से तुरंत दूर हटें।",
+      "बारिश के दौरान अगले 24 से 48 घंटे तक दूसरे भूस्खलन का खतरा बना रहता है, सावधानी रखें।"
+    ],
+    "steps_bn": [
+      "ভূমিধসের গতিপথের আড়াআড়ি (পাশে) উঁচু নিরাপদ স্থানে যান। ধসের সামনে ঢাল বেয়ে কখনো নিচে দৌড়াবেন না।",
+      "পাহাড়ি ঝোরা বা নদীর শব্দের পরিবর্তন, গাছ ভাঙা বা পাথরের সংঘর্ষের শব্দে সতর্ক হোন।",
+      "ঘরের ভেতরে আটকে পড়লে শক্ত আসবাবের নিচে মাথা ঢেকে আশ্রয় নিন, বাইরের দেওয়াল থেকে দূরে থাকুন।",
+      "ঝোরা, গভীর খাঁদ এবং ধসের পাদদেশ থেকে অবিলম্বে দূরে সরে যান।",
+      "ভারী বৃষ্টির পর ২৪-৪৮ ঘণ্টা দ্বিতীয় ধসের ঝুঁকি থাকে, ধসের স্থানে তাড়াহুড়ো করে যাবেন না।"
+    ]
+  },
+  {
+    "id": "kb-02",
+    "category": "Cloudburst & Flash Flood (बादल फाट्नु / अतिवृष्टि / মেঘভাঙা বৃষ্টি)",
+    "target_user": "All Hill Users",
+    "keywords": ["cloudburst", "flash flood", "heavy rain", "jhora", "torrential", "torrent", "बाढी", "बादल", "মেঘভাঙা"],
+    "title_en": "Cloudburst & Intense Mountain Torrent Safety",
+    "title_ne": "बादल फाट्दा र आकस्मिक बाढी आउँदा अपनाउनुपर्ने सुरक्षा",
+    "title_hi": "बादल फटने और आकस्मिक पहाड़ी बाढ़ से सुरक्षा",
+    "title_bn": "মেঘভাঙা বৃষ্টি ও আকস্মিক পাহাড়ি হড়পা বান রোধে সতর্কতা",
+    "severity": "CRITICAL",
+    "steps_en": [
+      "Immediately move to high, stable rocky ridges. Do NOT stay near jhoras (mountain streams), culverts, or valley floors.",
+      "If you notice stream water turning muddy or carrying forest mulch, a debris dam upstream has broken—evacuate the stream bank immediately within 60 seconds.",
+      "Disconnect main electricity switches to avoid electrocution from fallen wires touching wet ground.",
+      "Do NOT attempt to cross flowing mountain streams on foot or in light vehicles—water only 15 cm deep can sweep a person away.",
+      "Conserve phone battery and switch to low-power mode for mesh relay."
+    ],
+    "steps_ne": [
+      "तुरुन्तै अग्लो र बलियो चट्टानी डाँडामा जानुहोस्। झोड़ा, कल्भर्ट वा खोँच छेउमा नबस्नुहोस्।",
+      "यदि खोलाको पानी अचानक धमिलो भएर रूखका हाँगाबिंगा बगाउन थालेमा माथिल्लो भेगमा ताल फुटेको संकेत हो—६० सेकेन्डभित्र खोला किनारा छोड्नुहोस्।",
+      "पानी जमेको भुइँमा करेन्ट लाग्ने जोखिमबाट बच्न घरको मुख्य बिजुली स्विच बन्द गर्नुहोस्।",
+      "बगिरहेको खोला वा झोड़ा पैदल वा गाडीबाट तर्ने प्रयास नगर्नुहोस्—१५ सेमी गहिरो पानीले पनि बगाउन सक्छ।",
+      "फोन ब्याट्री जोगाउनुहोस् र अफलाइन मेश रिलेका लागि ब्याट्री सेभर अन गर्नुहोस्।"
+    ],
+    "steps_hi": [
+      "तुरंत ऊंची और ठोस चट्टानी पहाड़ियों की ओर जाएं। नालों, पुलियों या घाटी के निचले हिस्सों में बिल्कुल न रुकें।",
+      "यदि नाले का पानी अचानक अत्यधिक मटमैला हो जाए और लकड़ियां बहने लगें, तो ऊपर मलबा बांध टूटने का संकेत है—तुरंत किनारा छोड़ें।",
+      "गीली जमीन पर करंट फैलने से बचने के लिए मुख्य बिजली का स्विच बंद कर दें।",
+      "तेज बहते पहाड़ी नालों को पैदल या गाड़ी से पार करने की कोशिश न करें—15 सेमी पानी भी बहा सकता है।",
+      "फोन की बैटरी बचाएं और ऑफलाइन मेश रिले के लिए पावर सेवर चालू रखें।"
+    ],
+    "steps_bn": [
+      "অবিলম্বে উঁচু এবং শক্ত পাথুরে শৈলশিরায় আশ্রয় নিন। পাহাড়ি ঝোরা, কালভার্ট বা উপত্যকার তলদেশে থাকবেন না।",
+      "ঝোরার জল হঠাৎ ঘোলা হয়ে গাছের ডালপালা ভাসিয়ে আনলে বুঝবেন উপরে বাঁধ ভেঙেছে—৬০ সেকেন্ডের মধ্যে পাড় ছাড়ুন।",
+      "বিদ্যুৎস্পৃষ্ট হওয়া এড়াতে অবিলম্বে মূল বিদ্যুৎ সুইচ বন্ধ করুন।",
+      "প্রবল বেগে বয়ে যাওয়া পাহাড়ি ঝোরা হেঁটে বা ছোট গাড়িতে পার হওয়ার চেষ্টা করবেন না।",
+      "ফোনের চার্জ বাঁচিয়ে রাখুন এবং অফলাইন মেশ রিলের জন্য ব্যাটারি সেভার অন করুন।"
+    ]
+  },
+  {
+    "id": "kb-03",
+    "category": "Road Cutoff & Stranded Vehicle (सडक बन्द / मार्ग अवरुद्ध / রাস্তা বন্ধ)",
+    "target_user": "Driver & Passenger",
+    "keywords": ["road cutoff", "stranded", "nh55", "rohini", "traffic", "blocked", "गाडी", "सडक", "যানবাহন"],
+    "title_en": "Survival When Stranded on Mountain Roads (NH-55, Rohini, Peshok)",
+    "title_ne": "पहाडी सडक (NH-55, रोहिणी, पेशोक) मा फस्दा के गर्ने?",
+    "title_hi": "पहाड़ी सड़कों (NH-55, रोहिणी, पेशोक) पर फंसने पर क्या करें?",
+    "title_bn": "পাহাড়ি রাস্তায় (NH-55, রোহিণী, পেশক) আটকে পড়লে করণীয়",
+    "severity": "HIGH",
+    "steps_en": [
+      "Park vehicle facing away from unstable steep cliff-cuts; never park directly under overhanging boulders or dripping retaining walls.",
+      "Keep hazard lights on during fog; stay inside the vehicle unless rockfall is actively starting.",
+      "Check nearby community settlements or DHR stations (Tindharia, Kurseong, Sonada) for shelter.",
+      "Post a Road Blockage Report in PaharRakshak to mesh-broadcast to approaching vehicles on the route.",
+      "Ration water and food. Do NOT sleep with vehicle engine running in closed cabin due to carbon monoxide risk."
+    ],
+    "steps_ne": [
+      "गाडीलाई भित्तो खस्ने जोखिम नभएको ठाउँमा पार्क गर्नुहोस्; ठाडो भित्ता वा पानी रसाउने पर्खालमुनि गाडी नरोक्नुहोस्।",
+      "कुहिरो वा रातमा इमर्जेन्सी लाइट बालेर राख्नुहोस्। ढुङ्गा खसिरहेको छैन भने गाडीभित्रै बस्नुहोस्।",
+      "नजिकैका गाउँ वा डीएचआर रेलवे स्टेशनहरू (तिनधरिया, खरसाङ, सोनादा) मा आश्रय खोज्नुहोस्।",
+      "पहाडरक्षक एपमा सडक अवरोध रिपोर्ट दर्ता गरी अन्य गाडीहरूलाई मेश रिले मार्फत खबर पठाउनुहोस्।",
+      "पानी र खाना जोगाएर प्रयोग गर्नुहोस्। झ्याल बन्द गरेर गाडीको इन्जिन चालु राखी नसुत्नुहोस्।"
+    ],
+    "steps_hi": [
+      "गाड़ी को ढलान वाले पत्थरों या रिसाव वाली दीवारों के ठीक नीचे पार्क न करें।",
+      "कोहरे के दौरान खतरे की बत्तियां (हजार्ड लाइट्स) जलाएं। जब तक पत्थर न गिर रहे हों, गाड़ी के अंदर सुरक्षित रहें।",
+      "आसपास के पहाड़ी गांवों या डीएचआर रेलवे स्टेशनों में अस्थायी शरण लें।",
+      "पहाड़रक्षक ऐप में रोड ब्लॉकेज रिपोर्ट दर्ज करें ताकि पीछे से आ रहे वाहनों तक मेश रिले द्वारा अलर्ट पहुंचे।",
+      "पानी और भोजन का संयम से उपयोग करें। बंद शीशों वाली गाड़ी में इंजन चालू रखकर न सोएं।"
+    ],
+    "steps_bn": [
+      "ঝুলন্ত পাথর বা জল চুইয়ে পড়া রিটেনিং ওয়ালের নিচে গাড়ি পার্ক করবেন না।",
+      "কুয়াশার মধ্যে হ্যাজার্ড লাইট জ্বালিয়ে রাখুন। পাথর পড়া শুরু না হলে গাড়ির ভেতরেই থাকুন।",
+      "নিকটবর্তী পাহাড়ি গ্রাম বা টয় ট্রেনের স্টেশনে (তিনধারিয়া, কার্শিয়াং, সোনাদা) আশ্রয় নিন।",
+      "পাহাড়রক্ষক অ্যাপে রোড ব্লকেজ রিপোর্ট দিন যাতে পেছনের গাড়িগুলো মেশ রিলের মাধ্যমে সতর্কবার্তা পায়।",
+      "জল ও খাবার হিসেব করে খান। গাড়ির কাচ বন্ধ করে ইঞ্জিন চালিয়ে ঘুমাবেন না।"
+    ]
+  },
+  {
+    "id": "kb-04",
+    "category": "Cold Exposure & Hypothermia (अत्यधिक चिसो / अत्यधिक ठंड / তীব্র ঠান্ডা)",
+    "target_user": "Passenger & Homestay Host",
+    "keywords": ["cold", "hypothermia", "freezing", "frostbite", "shivering", "चिसो", "ठंड", "হাইপোথার্মিয়া"],
+    "title_en": "High-Altitude Hypothermia & Wet Cold Management",
+    "title_ne": "उच्च पहाडी भेगमा अत्यधिक चिसो र कठ्यांग्रिने समस्याबाट बच्ने उपाय",
+    "title_hi": "ऊंचाई वाले पहाड़ी इलाकों में अत्यधिक ठंड और हाइपोथर्मिया से बचाव",
+    "title_bn": "উচ্চ পাহাড়ি অঞ্চলে তীব্র ঠান্ডা ও হাইপোথার্মিয়া প্রতিরোধ",
+    "severity": "MEDIUM",
+    "steps_en": [
+      "Immediately replace wet clothes with dry layers. Wet cotton loses 90% of its insulating ability.",
+      "Insulate your body from the cold ground using pine needles, cardboard, backpacks, or plastic sheets.",
+      "Cover head, neck, and chest—over 40% of body heat radiates from exposed head and neck.",
+      "Provide warm sugary drinks (black tea with sugar, warm water). NEVER give alcohol as it accelerates core heat loss.",
+      "Huddle together in groups to share body heat in unheated shelters."
+    ],
+    "steps_ne": [
+      "भिजेका लुगा तुरुन्त फेरेर सुख्खा लुगा लगाउनुहोस्। भिजेको लुगाले शरीरको ९०% तातो गुमाउँछ।",
+      "चिसो भुइँबाट जोगिन सल्लाको पात, कार्डबोर्ड, झोला वा प्लास्टिक ओछ्याएर बस्नुहोस्।",
+      "टाउको, घाँटी र छाती राम्ररी छोप्नुहोस्।",
+      "तातो गुलियो चिया वा तातो पानी पिउनुहोस्। रक्सी कहिल्यै नपिउनुहोस् किनकि यसले शरीरको भित्री ताप घटाउँछ।",
+      "आश्रय स्थलमा समूहमा एकअर्कासँग टाँसिएर शरीरको ताप कायम राख्नुहोस्।"
+    ],
+    "steps_hi": [
+      "गीले कपड़े तुरंत बदलकर सूखे कपड़े पहनें। गीले कपड़ों से शरीर की गर्मी बहुत तेजी से घटती है।",
+      "ठंडी जमीन पर सीधे बैठने के बजाय पत्ते, गत्ते या प्लास्टिक की शीट बिछाएं।",
+      "सिर, गर्दन और सीने को अच्छी तरह ढकें।",
+      "गर्म मीठी चाय या गर्म पानी पिएं। शराब बिल्कुल न पिएं क्योंकि यह शरीर के तापमान को और कम करती है।",
+      "आश्रय केंद्र में एक साथ मिलकर बैठें ताकि एक-दूसरे की गर्मी मिल सके।"
+    ],
+    "steps_bn": [
+      "ভেজা জামাকাপড় অবিলম্বে খুলে শুকনো পোশাক পরুন। ভেজা কাপড়ে শরীরের উত্তাপ দ্রুত নষ্ট হয়।",
+      "ঠান্ডা মাটিতে সরাসরি না বসে শুকনো পাতা, পিচবোর্ড বা প্লাস্টিকের চাদর বিছিয়ে বসুন।",
+      "মাথা, ঘাড় এবং বুক ভালোভাবে ঢেকে রাখুন।",
+      "গরম মিষ্টি চা বা গরম জল পান করুন। কোনো অবস্থাতেই অ্যালকোহল খাবেন না।",
+      "আশ্রয়স্থলে সবাই একসাথে জড়ো হয়ে শরীরের স্বাভাবিক তাপমাত্রা ধরে রাখুন।"
+    ]
+  },
+  {
+    "id": "kb-05",
+    "category": "Cut Off from Hospital & First Aid (अस्पताल टाढा हुँदा / अस्पताल से कटे होने पर / হাসপাতাল বিচ্ছিন্ন)",
+    "target_user": "All Users & Homestay Host",
+    "keywords": ["hospital", "medical", "bleeding", "fracture", "first aid", "bandage", "उपचार", "प्राथमिक उपचार", "চিকিৎসা"],
+    "title_en": "Emergency Field Triage When Cut Off from PHC / Hospital",
+    "title_ne": "अस्पताल सम्पर्क विच्छेद हुँदा गरिने आपतकालीन प्राथमिक उपचार",
+    "title_hi": "अस्पताल से संपर्क कटने पर आपातकालीन प्राथमिक उपचार",
+    "title_bn": "হাসপাতাল থেকে বিচ্ছিন্ন অবস্থায় জরুরি প্রাথমিক চিকিৎসা",
+    "severity": "CRITICAL",
+    "steps_en": [
+      "Severe Bleeding: Apply firm, continuous direct pressure with a clean cloth for 10 full minutes without lifting.",
+      "Suspected Bone Fracture: Splint the limb using straight bamboo strips or rolled cardboard tied with cloth strips. Do NOT attempt to straighten crooked joints.",
+      "Crush Injury: Keep the victim warm and hydrated with clean water; do not massage swollen limbs.",
+      "Head Injury / Concussion: Keep neck immobilized; place victim on their side (recovery position) if unconscious to keep airway open.",
+      "Use PaharRakshak's Shelter Finder to identify the nearest functional Block PHC or Railway Clinic."
+    ],
+    "steps_ne": [
+      "रगत बगिरहेमा: सफा कपडाले कम्तीमा १० मिनेटसम्म बिना उठाए थिचेर राख्नुहोस्।",
+      "हड्डी भाँचिएमा: बाँसको भाटा वा बलियो काठ राखेर कपडाले बाँधी अंगलाई नचल्ने बनाउनुहोस्। बाङ्गो अंग सिधा बनाउने प्रयास नगर्नुहोस्।",
+      "अचेत भएमा: घाँटी नहल्लाई कोल्टे पारेर (रिकभरी पोजिसन) सुताउनुहोस् ताकि सास फेर्न सजिलो होस्।",
+      "सुन्निएको वा च्यापिएको भागलाई मालिस नगर्नुहोस्, न्यानो राख्नुहोस्।",
+      "पहाडरक्षकको सेल्टर लोकेटर प्रयोग गरी नजिकैको प्राथमिक स्वास्थ्य केन्द्र पत्ता लगाउनुहोस्।"
+    ],
+    "steps_hi": [
+      "गंभीर रक्तस्राव: साफ कपड़े से घाव पर बिना हटाए लगातार 10 मिनट तक सीधा दबाव बनाएं।",
+      "हड्डी टूटने का संदेह: बांस की खपच्ची या मोटे गत्ते का सहारा देकर कपड़े से बांधें। मुड़े हुए अंग को जबरन सीधा न करें।",
+      "बेहोशी की स्थिति: गर्दन को स्थिर रखते हुए व्यक्ति को करवट के बल लिटाएं ताकि सांस की नली खुली रहे।",
+      "सूजे हुए या चोटिल हिस्से की मालिश न करें, पीड़ित को गर्म रखें।",
+      "पहाड़रक्षक ऐप में शेल्टर फाइंडर का उपयोग करके निकटतम प्राथमिक स्वास्थ्य केंद्र खोजें।"
+    ],
+    "steps_bn": [
+      "মারাত্মক রক্তপাত: পরিষ্কার কাপড় দিয়ে ক্ষতের ওপর টানা ১০ মিনিট জোরে চেপে ধরে রাখুন।",
+      "হাড় ভাঙার সন্দেহ: বাঁশের চটা বা শক্ত পিচবোর্ড দিয়ে ব্যান্ডেজ করে অঙ্গটি স্থির রাখুন। জোর করে সোজা করবেন না।",
+      "অজ্ঞান হলে: ঘাড় না নাড়িয়ে ব্যক্তিকে একপাশে কাত করে শোয়ান যাতে শ্বাসনালী পরিষ্কার থাকে।",
+      "ফোলা বা থেঁতলে যাওয়া স্থানে ম্যাসাজ করবেন না, উষ্ণ রাখুন।",
+      "পাহাড়রক্ষক অ্যাপের মাধ্যমে নিকটস্থ প্রাথমিক স্বাস্থ্য কেন্দ্র চিহ্নিত করুন।"
+    ]
+  },
+  {
+    "id": "kb-06",
+    "category": "Water Disinfection for Hill Springs (पिउने पानी शुद्धिकरण / पेयजल शुद्धिकरण / পানীয় জল বিশুদ্ধকরণ)",
+    "target_user": "Farmer & Homestay Host",
+    "keywords": ["water", "purification", "boiling", "chlorine", "diarrhea", "पानी", "जल", "জল"],
+    "title_en": "Off-Grid Water Disinfection for Hill Springs (Dhara) & Jhoras",
+    "title_ne": "पहिरो र बाढीको बेला मूल (धारा) र झोड़ाको पानी शुद्धिकरण",
+    "title_hi": "आपदा के दौरान प्राकृतिक झरनों और नालों के पानी का शुद्धिकरण",
+    "title_bn": "পাহাড়ি ঝরনা ও ঝোরার জল বিশুদ্ধকরণ পদ্ধতি",
+    "severity": "MEDIUM",
+    "steps_en": [
+      "Let muddy flood water stand in a container for 1-2 hours to settle silt, then decant the clear top water through a clean four-fold cloth.",
+      "Boil water vigorously for at least 3 minutes at high altitude (above 1,500 m / 5,000 ft).",
+      "If boiling is not possible, add 2 drops of unscented household chlorine bleach (or 1 Halazone/chlorine tablet) per liter of water and wait 30 minutes before drinking.",
+      "Store treated water in sealed containers to prevent cholera and gastroenteritis outbreaks.",
+      "Never drink surface runoff directly after a landslide due to dead animal and sewer contamination."
+    ],
+    "steps_ne": [
+      "धमिलो पानीलाई १-२ घण्टा भाँडामा स्थिर राखेर माटो थिग्रिन दिनुहोस्, त्यसपछि सफा चार-तह कपडाले छानेर पानी छुट्ट्याउनुहोस्।",
+      "उच्च पहाडी भेग (१,५०० मिटर माथि) मा पानीलाई कम्तीमा ३ मिनेटसम्म राम्ररी उमाल्नुहोस्।",
+      "उमाल्न सम्भव नभए प्रति लिटर पानीमा २ थोपा क्लोरिन वा पानी शुद्ध गर्ने चक्की हालेर ३० मिनेट पर्खनुहोस्।",
+      "झाडापखाला र हैजाबाट बच्न शुद्ध पानीलाई सधैं छोपेर राख्नुहोस्।",
+      "पहिरो खसेको स्थानको पानी कहिल्यै सिधै नपिउनुहोस्।"
+    ],
+    "steps_hi": [
+      "मटमैले पानी को 1-2 घंटे स्थिर रखकर मिट्टी नीचे बैठने दें, फिर साफ कपड़े की चार परतों से छान लें।",
+      "पहाड़ों में (1500 मीटर से ऊपर) पानी को कम से कम 3 मिनट तक अच्छी तरह उबालें।",
+      "उबालना संभव न हो तो प्रति लीटर पानी में 2 बूंद क्लोरीन या वॉटर प्यूरिफिकेशन टैबलेट डालकर 30 मिनट प्रतीक्षा करें।",
+      "शुद्ध पानी को ढककर रखें ताकि संक्रमण न फैले।",
+      "भूस्खलन के तुरंत बाद का खुला पानी कभी न पिएं।"
+    ],
+    "steps_bn": [
+      "ঘোলা জল ১-২ ঘণ্টা পাত্রে রেখে পলি নিচে জমতে দিন, তারপর ৪ স্তর পরিষ্কার কাপড়ে ছেঁকে নিন।",
+      "পাহাড়ের উচ্চতায় জল কমপক্ষে ৩ মিনিট ভালো করে ফোটান।",
+      "ফোটানো সম্ভব না হলে প্রতি লিটার জলে ২ ফোঁটা ক্লোরিন বা জল বিশুদ্ধকরণ ট্যাবলেট দিয়ে ৩০ মিনিট অপেক্ষা করুন।",
+      "কলেরা ও ডায়রিয়া এড়াতে বিশুদ্ধ জল ঢেকে রাখুন।",
+      "ধস নামার পর খোলা নালার জল সরাসরি কখনো পান করবেন না।"
+    ]
+  },
+  {
+    "id": "kb-07",
+    "category": "DHR Track Gangman & Inspection (रेलवे ट्रयाक निरीक्षण / रेलवे ट्रैक निरीक्षण / রেলওয়ে ট্র্যাক পরিদর্শন)",
+    "target_user": "DHR Railway Worker & Gangman",
+    "keywords": ["track", "railway", "dhr", "gangman", "sleeper", "culvert", "toy train", "ट्रेन", "ट्रयाक", "রেলওয়ে"],
+    "title_en": "DHR Permanent-Way Monsoon Track & Formation Patrol",
+    "title_ne": "दार्जिलिङ हिमालयन रेलवे ट्रयाक तथा पर्खाल गस्ती निर्देशिका",
+    "title_hi": "डीएचआर रेलवे ट्रैक एवं फॉर्मेशन मानसून गश्त निर्देशिका",
+    "title_bn": "দার্জিলিং হিমালয়ান রেলওয়ে ট্র্যাক ও ড্রেন পরিদর্শন নির্দেশিকা",
+    "severity": "HIGH",
+    "steps_en": [
+      "Check toe-wall ballast washout at vulnerable curve loops (Batasia Loop, Agony Point, Tindharia Z-reverses).",
+      "Clear blocked catch-water drains along the uphill hill-cut to prevent ballast scour.",
+      "If ballast is washed away leaving rails hanging, immediately plant red banner flags 600m ahead of the section.",
+      "Inspect rockfall netting above Ghoom-Sonada section after every 50mm hourly rainfall burst.",
+      "Report track formation cracks into PaharRakshak to alert loco shed masters at Tindharia."
+    ],
+    "steps_ne": [
+      "घुम्ती र लुपहरू (बतासिया लुप, तिनधरिया जेड-रिभर्स) मा ट्रयाकमुनिको गिट्टी र माटो बगेको छ कि छैन जाँच्नुहोस्।",
+      "माथिल्लो डिलको नालीमा जमेको पात र हिलो सफा गर्नुहोस् ताकि पानी ट्रयाकमा नपसोस्।",
+      "यदि ट्रयाकमुनिको जमिन भासिएर रेलको लिक हावामा झुण्डिएको छ भने तत्काल ६०० मिटर अगाडि रातो झण्डा वा बत्ती राख्नुहोस्।",
+      "घूम-सोनादा खण्डमा रहेको रकफल जालीलाई हरेक ठूलो झरीपछि निरीक्षण गर्नुहोस्।",
+      "पहाडरक्षक एपमा ट्रयाक जोखिम रिपोर्ट दर्ता गरी तिनधरिया लोको सेडका स्टेशन मास्टरलाई खबर गर्नुहोस्।"
+    ],
+    "steps_hi": [
+      "बतासिया लूप, तिनधरिया जेड-रिवर्स जैसे मोड़ों पर ट्रैक के नीचे गिट्टी और मिट्टी के कटाव की जांच करें।",
+      "पहाड़ी की ओर के नालों को साफ रखें ताकि पानी सीधे ट्रैक पर न बहे।",
+      "यदि ट्रैक के नीचे की जमीन धंस जाए और पटरी हवा में लटक जाए, तो तुरंत 600 मीटर पहले लाल झंडी लगाएं।",
+      "घूम-सोनाडा खंड पर भारी बारिश के बाद सुरक्षा जाली का निरीक्षण करें।",
+      "पहाड़रक्षक ऐप में ट्रैक की स्थिति दर्ज कर तिनधरिया लोको शेड को तुरंत सूचित करें।"
+    ],
+    "steps_bn": [
+      "বাতাসিয়া লুপ ও তিনধারিয়া রিভার্স সেকশনে লাইনের নিচের ব্যালাস্ট বা পাথর ধুয়ে গেছে কিনা পরীক্ষা করুন।",
+      "পাহাড়ের নালার জমা কাদা পরিষ্কার রাখুন যাতে জল রেললাইনে না ওঠে।",
+      "লাইনের নিচের মাটি সরে গিয়ে রেললাইন শূন্যে ঝুললে অবিলম্বে ৬০০ মিটার আগে লাল পতাকা লাগান।",
+      "ঘুম-সোনাদা সেকশনে পাথর আটকানোর নেটের অবস্থা পরীক্ষা করুন।",
+      "পাহাড়রক্ষক অ্যাপে ট্র্যাকিং রিপোর্ট পাঠিয়ে তিনধারিয়া শেডের স্টেশন মাস্টারকে সতর্ক করুন।"
+    ]
+  },
+  {
+    "id": "kb-08",
+    "category": "Tea Garden Slope & Soil Erosion (चिया बगान तथा भिरालो खेत / चाय बागान / চা বাগান)",
+    "target_user": "Terrace Farmer & Tea Worker",
+    "keywords": ["tea", "garden", "terrace", "erosion", "crop", "leaf", "farmer", "चिया", "चाय", "চা"],
+    "title_en": "Tea Garden Slope Protection & Monsoon Drainage Management",
+    "title_ne": "चिया बगान तथा भिरालो खेतमा माटो कटान रोक्ने उपाय",
+    "title_hi": "चाय बागानों एवं सीढ़ीदार खेतों में मिट्टी कटाव रोकथाम",
+    "title_bn": "চা বাগান ও পাহাড়ি জমিতে মাটির ক্ষয়রোধ নির্দেশিকা",
+    "severity": "MEDIUM",
+    "steps_en": [
+      "Dig contour diversion drains along the upper perimeter of tea sections to route heavy runoff safely to stony natural jhoras.",
+      "Plant fast-rooting deep hedge grasses (Vetiver, Napier) along contour bunds to bind loose topsoil.",
+      "Avoid plucking tea or working on 45° steep slopes during active cloudbursts due to sudden mudflow risk.",
+      "Check terrace retaining walls for weep hole blockages to prevent terrace collapse.",
+      "Small tea growers: Store harvested green leaf in elevated dry bamboo sheds if factory transport roads are blocked."
+    ],
+    "steps_ne": [
+      "चिया बगानको माथिल्लो डिलमा कन्टुअर नाली खनेर भलपानीलाई सुरक्षित ढुङ्गेनी खोलातिर मोड्नुहोस्।",
+      "माटो समात्नका लागि गराको कान्लामा गहिरो जरा हुने घाँस (भेटिभर, नेपियर) रोप्नुहोस्।",
+      "मुसलधारे पानी परिरहेको बेला ४५ डिग्री भन्दा ठाडो कान्लामा काम नगर्नुहोस्, लेदो खस्ने जोखिम हुन्छ।",
+      "कान्लाको ढुङ्गाको पर्खालमा पानी निस्कने प्वाल खुला राख्नुहोस्।",
+      "साना चिया किसान: सडक बन्द भएमा टिपेको चियापत्तीलाई अग्लो बाँसको खटमा हावा लाग्ने गरी राख्नुहोस्।"
+    ],
+    "steps_hi": [
+      "चाय बागान के ऊपरी हिस्से में समोच्च (कंटूर) नालियां बनाकर तेज पानी को सुरक्षित रूप से प्राकृतिक नालों में मोड़ें।",
+      "मिट्टी को बांधने के लिए सीढ़ीदार खेतों की मेड़ों पर गहरी जड़ वाली घास (वेटीवर, नेपियर) लगाएं।",
+      "तेज बारिश के दौरान 45 डिग्री से अधिक ढलान वाले हिस्सों पर काम न करें, अचानक कीचड़ बहने का खतरा रहता है।",
+      "सीढ़ीदार खेतों की सुरक्षा दीवारों के जल निकासी छिद्र खुले रखें।",
+      "छोटे चाय उत्पादक: सड़क बंद होने पर तोड़ी गई पत्तियों को ऊंचे हवादार मचान पर फैलाकर रखें।"
+    ],
+    "steps_bn": [
+      "চা বাগানের ওপরের অংশে ড্রেন কেটে বৃষ্টির জল সরাসরি পাথুরে ঝোরার দিকে প্রবাহিত করুন।",
+      "মাটি আঁকড়ে ধরে রাখতে ঢালের ধারে ভেটিভার বা নেপিয়ার ঘাস লাগান।",
+      "প্রবল বৃষ্টির সময় খাড়া ঢালে পাতা তুলতে যাবেন না, হঠাৎ কাদা ধসের আশঙ্কা থাকে।",
+      "জমির পাথুরে দেওয়ালের জল বেরোনোর মুখগুলো পরিষ্কার রাখুন।",
+      "ক্ষুদ্র চা চাষি: রাস্তা বন্ধ থাকলে তোলা কাঁচা পাতা উঁচু মাচায় খোলামেলা স্থানে রাখুন।"
+    ]
+  },
+  {
+    "id": "kb-09",
+    "category": "Homestay Emergency Readiness (होमस्टे पाहुना सुरक्षा / होमस्टे अतिथि सुरक्षा / হোমস্টে অতিথি সুরক্ষা)",
+    "target_user": "Homestay Host",
+    "keywords": ["homestay", "guest", "tourist", "host", "food", "generator", "पाहुना", "होमस्टे", "হোমস্টে"],
+    "title_en": "Hill Village Homestay Protocol During Weather Cutoffs",
+    "title_ne": "मौसम खराब हुँदा ग्रामीण होमस्टेमा पाहुना सुरक्षा तथा व्यवस्थापन",
+    "title_hi": "खराब मौसम व सड़क बंद होने पर होमस्टे अतिथि सुरक्षा प्रोटोकॉल",
+    "title_bn": "দুর্যোগের সময় পাহাড়ি হোমস্টেতে অতিথি নিরাপত্তা নির্দেশিকা",
+    "severity": "MEDIUM",
+    "steps_en": [
+      "Keep a 3-day reserve of dry provisions (rice, lentils, potatoes, tea, LPG cylinder, bottled water).",
+      "Stock emergency solar lanterns, power banks, and first aid kits in common guest areas.",
+      "Advise guests to stay indoors; do not let tourists trek down unknown ridge trails during heavy fog and torrential rain.",
+      "Check PaharRakshak's Road Mesh before advising guests on departure taxi timings to Siliguri/Bagdogra airport.",
+      "Provide multilingual safety briefings using the app in Nepali, Hindi, Bengali, or English."
+    ],
+    "steps_ne": [
+      "कम्तीमा ३ दिन पुग्ने सुख्खा खाद्यान्न (चामल, दाल, आलु, चिया, ग्यास, पिउने पानी) भण्डारण गर्नुहोस्।",
+      "इमर्जेन्सी लाइट, पावर बैंक र प्राथमिक उपचार बक्स पाहुना बस्ने कोठा नजिक तयार राख्नुहोस्।",
+      "कुहिरो र मुसलधारे वर्षामा पाहुनालाई बाहिर नजान र अपरिचित गोरेटोमा नहिँड्न सल्लाह दिनुहोस्।",
+      "सिलगढी वा बागडोगरा विमानस्थल जाने पाहुनालाई गाडी चढाउनु अघि पहाडरक्षक सडक मेशमा बाटोको अवस्था जाँच्नुहोस्।",
+      "पहाडरक्षक एप प्रयोग गरी पाहुनालाई नेपाली, हिन्दी, बंगाली वा अंग्रेजीमा सुरक्षा जानकारी दिनुहोस्।"
+    ],
+    "steps_hi": [
+      "कम से कम 3 दिन का सूखा राशन (चावल, दाल, आलू, चाय, गैस सिलेंडर, पीने का पानी) सुरक्षित रखें।",
+      "सोलर लालटेन, पावर बैंक और फर्स्ट एड बॉक्स को आसानी से मिलने वाली जगह पर रखें।",
+      "घने कोहरे और बारिश में पर्यटकों को अकेले अनजान रास्तों पर ट्रैकिंग के लिए न जाने दें।",
+      "सिलिगुड़ी/बागडोगरा जाने वाले मेहमानों को विदा करने से पहले पहाड़रक्षक ऐप पर सड़क की स्थिति अवश्य जांचें।",
+      "ऐप के माध्यम से पर्यटकों को उनकी भाषा (नेपाली, हिंदी, बंगाली, अंग्रेजी) में सुरक्षा निर्देश दें।"
+    ],
+    "steps_bn": [
+      "কমপক্ষে ৩ দিনের শুকনো খাবার (চাল, ডাল, আলু, চা, গ্যাস, পানীয় জল) মজুত রাখুন।",
+      "জরুরি সোলার লাইট, পাওয়ার ব্যাঙ্ক এবং ফার্স্ট এইড বক্স সহজে হাতের কাছে রাখুন।",
+      "ভারী বৃষ্টি ও কুয়াশার সময় পর্যটকদের অজানা পাহাড়ি পথে একা বের হতে বারণ করুন।",
+      "শিলিগুড়ি বা বাগডোগরা এয়ারপোর্টে যাওয়ার আগে পাহাড়রক্ষক অ্যাপে রাস্তার লাইভ আপডেট দেখে নিন।",
+      "অ্যাপের মাধ্যমে পর্যটকদের নিজস্ব ভাষায় (বাংলা, হিন্দি, নেপালি, ইংরেজি) জরুরি পরামর্শ দিন।"
+    ]
+  },
+  {
+    "id": "kb-10",
+    "category": "Teesta River & Low Valley Surge (टिस्टा नदी बाढी / तीस्ता नदी बाढ़ / তিস্তা নদী প্লাবন)",
+    "target_user": "All Valley Users",
+    "keywords": ["teesta", "river", "surge", "coronation", "bridge", "flood", "टिस्टा", "तीस्ता", "তিস্তা"],
+    "title_en": "Teesta River Surge & Valley Floor Evacuation (NH-10 Corridor)",
+    "title_ne": "टिस्टा नदीको बाढी र तल्लो उपत्यका क्षेत्रमा सतर्कता",
+    "title_hi": "तीस्ता नदी का जलस्तर बढ़ने पर घाटी क्षेत्र से सुरक्षित निकासी",
+    "title_bn": "তিস্তা নদীর জলস্তর বৃদ্ধি ও উপত্যকা অঞ্চল থেকে নিরাপদ উদ্ধার",
+    "severity": "CRITICAL",
+    "steps_en": [
+      "If siren or upstream warning sounds, evacuate riverbanks (Teesta Bazar, Melli, Rambi, 29th Mile) immediately to 30m vertical height.",
+      "Do NOT stop vehicles on Coronation Bridge, Sevoke Railway Bridge, or Teesta Barrage during high water flow.",
+      "Avoid low-lying river side roads (NH-10); use alternate high ridge routes via Peshok or Lava-Gorubathan.",
+      "Watch for backflow in tributary streams (Relli, Great Rangit) which flood suddenly when Teesta rises.",
+      "Keep essential documents in waterproof plastic pouches."
+    ],
+    "steps_ne": [
+      "माथिल्लो भेगबाट बाढीको साइरन वा खबर आएमा टिस्टा बजार, मेल्ली, राम्बी, २९ माइल लगायत नदी किनाराबाट कम्तीमा ३० मिटर माथि डाँडामा जानुहोस्।",
+      "नदीमा ठूलो बाढी आएको बेला कोरोनेशन पुल वा रेलवे पुलमा गाडी नरोक्नुहोस्।",
+      "नदी छेउको NH-10 सडक प्रयोग नगरी पेशोक वा लाभा-गोरुबथानको अग्लो डाँडाको बाटो प्रयोग गर्नुहोस्।",
+      "टिस्टा बढेपछि रंगेली, रंगित जस्ता साना खोलाहरू थुनिएर बस्तीमा पस्ने हुँदा सतर्क रहनुहोस्।",
+      "महत्वपूर्ण कागजातहरू वाटरप्रूफ प्लास्टिकको थैलीमा राख्नुहोस्।"
+    ],
+    "steps_hi": [
+      "तीस्ता बाजार, मेल्ली, राम्बी या 29वें मील के पास नदी किनारे से तुरंत कम से कम 30 मीटर ऊंची पहाड़ी पर जाएं।",
+      "तेज बहाव के समय कोरोनेशन ब्रिज या सेवोक रेलवे पुल पर वाहन न रोकें।",
+      "नदी के किनारे वाले NH-10 मार्ग के बजाय पेशोक या लावा-गोरुबथान वाले ऊपरी पहाड़ी मार्गों का प्रयोग करें।",
+      "तीस्ता का जलस्तर बढ़ने पर छोटी सहायक नदियों का पानी पीछे लौटकर बस्तियों में भर सकता है, सावधान रहें।",
+      "जरूरी दस्तावेज वाटरप्रूफ बैग में सुरक्षित रखें।"
+    ],
+    "steps_bn": [
+      "তিস্তা বাজার, মেল্লি, রাম্বি ও ২৯ মাইলের মতো নিম্নাঞ্চল থেকে অবিলম্বে অন্তত ৩০ মিটার উঁচু পাহাড়ে আশ্রয় নিন।",
+      "প্রবল জলপ্রবাহের সময় করোনেশন ব্রিজ বা সেবক রেল ব্রিজে গাড়ি থামাবেন না।",
+      "তিস্তার তীরের NH-10 এড়িয়ে পেশক বা লাভা-গরুবাথান হয়ে বিকল্প উঁচু রাস্তা ব্যবহার করুন।",
+      "তিস্তা ফুলে উঠলে রঙ্গিত ও অন্যান্য পাহাড়ি উপনদীতে জল উল্টোদিকে ঢুকতে পারে, সতর্ক থাকুন।",
+      "গুরুত্বপূর্ণ কাগজপত্র প্লাস্টিকের ওয়াটারপ্রুফ ব্যাগে রাখুন।"
+    ]
+  },
+  {
+    "id": "kb-11",
+    "category": "Hill Earthquake & Aftershocks (भूकम्प सुरक्षा / भूकंप सुरक्षा / ভূমিকম্প সতর্কতা)",
+    "target_user": "All Hill Users",
+    "keywords": ["earthquake", "tremor", "aftershock", "building", "भूकम्प", "भूकंप", "ভূমিকম্প"],
+    "title_en": "High-Gradient Earthquake & Post-Tremor Slope Protection",
+    "title_ne": "पहाडी भेगमा भूकम्प र त्यसपछिका पराकम्पबाट बच्ने उपाय",
+    "title_hi": "पहाड़ी ढलानों पर भूकंप एवं झटकों के बाद सुरक्षा उपाय",
+    "title_bn": "পাহাড়ি অঞ্চলে ভূমিকম্প ও পরাঘাত পরবর্তী সতর্কতা",
+    "severity": "CRITICAL",
+    "steps_en": [
+      "During shaking: Drop, Cover, and Hold on under heavy timber furniture. Stay clear of cantilevered balconies.",
+      "Once shaking stops, immediately exit multi-story hill buildings—do NOT use lifts.",
+      "Move to open flat ground away from power lines, stepped retaining walls, and sheer rock cuts.",
+      "Be alert for earthquake-triggered rockfalls and landslides for several days following a major tremor.",
+      "Check gas connections and electrical wiring before lighting candles or stoves."
+    ],
+    "steps_ne": [
+      "भूकम्पको धक्का महसुस हुँदा: बलियो टेबलमुनि टाउको छोपेर बस्नुहोस्। बार्दली वा झ्याल छेउ नजानुहोस्।",
+      "धक्का रोकिएपछि तुरुन्तै घर बाहिर खुला सुरक्षित ठाउँमा निस्कनुहोस्।",
+      "बिजुलीका पोल, अग्ला पर्खाल र ढुङ्गेनी भित्ताबाट टाढा खुला चौरमा बस्नुहोस्।",
+      "भूकम्पपछि पहाडको माटो खुकुलो हुने भएकाले केही दिनसम्म पहिरोको जोखिम उच्च रहन्छ।",
+      "घरभित्र ग्यास चुहिएको छ कि छैन जाँचेर मात्र आगो बाल्नुहोस्।"
+    ],
+    "steps_hi": [
+      "भूकंप के झटके के समय: मजबूत मेज के नीचे सिर ढककर बैठें। बालकनी या खिड़कियों के पास न जाएं।",
+      "झटके रुकते ही तुरंत खुली जगह की ओर निकलें।",
+      "बिजली के खंभों, ऊंची दीवारों और ढलान वाले पत्थरों से दूर किसी खुले मैदान में रुकें।",
+      "भूकंप के बाद पहाड़ों में मिट्टी ढीली हो जाती है, इसलिए अगले कुछ दिनों तक भूस्खलन का खतरा रहता है।",
+      "घर में गैस सिलेंडर की जांच करने के बाद ही माचिस या चूल्हा जलाएं।"
+    ],
+    "steps_bn": [
+      "কম্পন চলাকালীন: শক্ত টেবিলের নিচে মাথা ঢেকে বসে থাকুন। ঝুলন্ত বারান্দা থেকে দূরে থাকুন।",
+      "কম্পন থামার সাথে সাথে বহুতল পাহাড়ি বাড়ি থেকে খোলা জায়গায় বেরিয়ে আসুন।",
+      "বৈদ্যুতিক তার, উঁচু রিটেনিং ওয়াল ও খাড়া পাহাড় থেকে দূরে খোলা মাঠে দাঁড়ান।",
+      "ভূমিকম্পের পর পাহাড়ের মাটি আলগা হয়ে যায়, ফলে পরবর্তী কয়েকদিন ধস নামার আশঙ্কা প্রবল থাকে।",
+      "গ্যাস পাইপ বা সিলিন্ডার পরীক্ষা না করে আগুন জ্বালাবেন না।"
+    ]
+  },
+  {
+    "id": "kb-12",
+    "category": "Monsoon Grab-Bag & Emergency Kit (आपतकालीन झोला / आपातकालीन किट / জরুরি কিট)",
+    "target_user": "All Hill Users",
+    "keywords": ["kit", "bag", "supplies", "torch", "medicines", "झोला", "किट", "কিট"],
+    "title_en": "Pre-Monsoon 72-Hour Survival Grab-Bag Checklist for Hill Homes",
+    "title_ne": "वर्षायामका लागि ७२-घण्टे आपतकालीन झोला (Grab-Bag) चेकलिस्ट",
+    "title_hi": "मानसून पूर्व 72-घंटे की आपातकालीन किट (Grab-Bag) चेकलिस्ट",
+    "title_bn": "বর্ষার জন্য ৭২ ঘণ্টার জরুরি কিট (Grab-Bag) তালিকা",
+    "severity": "LOW",
+    "steps_en": [
+      "Water & Purification: 3 liters bottled water + chlorine tablets or iodine drops.",
+      "Emergency Light: Solar/crank torchlight, extra AA/AAA batteries, matchboxes in ziplock bag.",
+      "Medical Cache: Antiseptic lotion (Betadine), sterile gauze rolls, band-aids, Paracetamol, ORS packets, personal prescription medicines for 7 days.",
+      "Communication & Identity: Charged power bank, USB cable, photocopy of Aadhaar/Voter ID in waterproof bag.",
+      "Warmth & Tools: Rain poncho, thermal inner wear, multi-tool pocket knife, whistle for calling search & rescue teams."
+    ],
+    "steps_ne": [
+      "पानी: ३ लिटर पिउने पानी + पानी शुद्ध गर्ने चक्की (क्लोरिन)।",
+      "बत्ती: टर्चलाइट, अतिरिक्त ब्याट्री, वाटरप्रूफ प्लास्टिकमा राखिएको सलाई वा लाइटर।",
+      "औषधि: घाउ सफा गर्ने औषधी (बेटाडिन), ब्यान्डेज, सिटामोल, जीवनजल (ORS), नियमित खाने औषधि ७ दिनलाई।",
+      "सञ्चार: चार्ज गरिएको पावर बैंक, केबल, नागरिकता/परिचयपत्रको फोटोकपी वाटरप्रूफ थैलीमा।",
+      "सुरक्षा: बर्साती (रेनकोट), न्यानो लुगा, सानो चक्कु र उद्धार टोलीलाई संकेत गर्न सिठ्ठी।"
+    ],
+    "steps_hi": [
+      "पानी: 3 लीटर सुरक्षित पेयजल + वॉटर प्यूरिफिकेशन टैबलेट।",
+      "रोशनी: सोलर/बैटरी टॉर्च, अतिरिक्त सेल, वाटरप्रूफ प्लास्टिक में माचिस।",
+      "दवाइयां: एंटीसेप्टिक लोशन, पट्टी, पैरासिटामोल, ओआरएस (ORS) पैकेट और 7 दिन की नियमित दवाएं।",
+      "पहचान व संचार: पूरी तरह चार्ज पावर बैंक, केबल, पहचान पत्रों की वाटरप्रूफ फोटोकॉपी।",
+      "कपड़े व उपकरण: रेनकोट/पोंचो, गर्म कपड़े, छोटा चाकू और बचाव दल को बुलाने हेतु सीटी।"
+    ],
+    "steps_bn": [
+      "পানীয় জল: ৩ লিটার জল + জল বিশুদ্ধকরণ ট্যাবলেট।",
+      "আলো: টর্চলাইট, অতিরিক্ত ব্যাটারি, প্লাস্টিকে মোড়ানো দেশলাই।",
+      "ওষুধ: অ্যান্টিসেপটিক লোশন, গজ ব্যান্ডেজ, প্যারাসিটামল, ওআরএস (ORS), ৭ দিনের প্রয়োজনীয় ওষুধ।",
+      "নথিপত্র ও চার্জার: ফুল চার্জ পাওয়ার ব্যাঙ্ক, কেবিল, আধার কার্ডের ওয়াটারপ্রুফ কপি।",
+      "পোশাক ও সরঞ্জাম: রেনকোট, গরম পোশাক, ছোট ছুরি এবং উদ্ধারকারী দলকে সংকেত দেওয়ার বাঁশি।"
+    ]
+  }
+]

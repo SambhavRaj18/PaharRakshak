@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PaharRakshak - Offline Hills Disaster & Road Mesh PWA</title>
+  <meta name="description" content="Offline Landslide Reporter, Road Status Mesh & Disaster-Ready Hills Assistant for Darjeeling and Himalayan Communities" />
+  <meta name="theme-color" content="#0f2137" />
+  
+  <!-- PWA Manifest & Icons -->
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./assets/icons/icon-192.svg" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.svg" />
+
+  <!-- Google Fonts for Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-section">
+        <img src="./assets/icons/icon-192.svg" alt="PaharRakshak Logo" class="app-logo" />
+        <div>
+          <h1 class="brand-title" data-i18n="appName">PaharRakshak</h1>
+          <p class="brand-subtitle" data-i18n="appTagline">Offline Disaster & Road Mesh for the Hills</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- Language Switcher (EN, NE, HI, BN) -->
+        <select id="global-lang-select" class="lang-select" aria-label="Select Language">
+          <option value="en">English</option>
+          <option value="ne">नेपाली (Nepali)</option>
+          <option value="hi">हिंदी (Hindi)</option>
+          <option value="bn">বাংলা (Bengali)</option>
+        </select>
+
+        <!-- Sunlight High Contrast Toggle -->
+        <label class="contrast-toggle-wrap" title="Toggle High Contrast for Sunlight Readability">
+          <input type="checkbox" id="high-contrast-toggle" />
+          <span data-i18n="highContrastToggle">Sunlight Contrast</span>
+        </label>
+
+        <!-- Emergency Siren Horn -->
+        <button id="global-horn-btn" class="horn-icon-btn" title="Sound Emergency Warning Horn">
+          🚨 Horn
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Network & Airplane Mode Status Bar -->
+  <div class="status-bar-container">
+    <div id="network-status-badge" class="status-badge offline">
+      <span class="status-dot"></span>
+      <span data-i18n="statusOffline">Offline Mode (IndexedDB Active)</span>
+    </div>
+    <div class="airplane-pill" data-i18n="airplaneModeNotice">
+      ✈️ 100% Offline PWA · Airplane Mode Ready
+    </div>
+    <button id="ai-status-pill" class="ai-status-pill" title="Configure Local Google Gemma Model">
+      <span class="pulse-dot"></span>
+      <span id="ai-status-label">🤖 Local AI: Detecting...</span>
+    </button>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs-wrapper">
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab-btn active" data-tab="reporter" role="tab">
+        <span>📸</span> <span data-i18n="tabReporter">Slope Reporter (B1)</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="mesh" role="tab">
+        <span>🗺️</span> <span data-i18n="tabMesh">Road Mesh (B6)</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="guide" role="tab">
+        <span>🆘</span> <span data-i18n="tabGuide">Hills Assistant (B7)</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="relay" role="tab">
+        <span>📡</span> <span data-i18n="tabRelay">P2P Relay (B1/B6)</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Main Content Panels -->
+  <main class="main-content">
+
+    <!-- ================================================================= -->
+    <!-- Panel 1: B1 Offline Landslide Reporter & Queue -->
+    <!-- ================================================================= -->
+    <section id="panel-reporter" class="tab-panel active">
+      <div class="card">
+        <h2 class="section-title" data-i18n="reporterTitle">Offline Slope Hazard Reporter</h2>
+        <p class="section-subtitle" data-i18n="reporterSubtitle">Capture or upload hill slope damage. On-device AI assesses risk and queues reports locally.</p>
+
+        <!-- Camera In-App Stream (getUserMedia) -->
+        <div id="camera-stream-container" class="camera-view-box hidden">
+          <video id="camera-preview-video" class="camera-video" playsinline autoplay muted></video>
+          <div class="camera-controls">
+            <button id="btn-camera-snap" class="btn btn-primary">📸 Snap Photo</button>
+            <button id="btn-camera-close" class="btn btn-secondary">✖ Close Camera</button>
+          </div>
+        </div>
+
+        <!-- Photo Preview Card -->
+        <div id="photo-preview-card" class="preview-card-box hidden">
+          <img id="photo-preview-img" class="preview-image" src="" alt="Captured slope preview" />
+        </div>
+
+        <div class="btn-row">
+          <button id="btn-camera-capture" class="btn btn-primary">
+            📷 <span data-i18n="capturePhoto">Take Photo with Camera</span>
+          </button>
+          <label class="btn btn-secondary">
+            📁 <span data-i18n="uploadPhoto">Select from Gallery / File</span>
+            <input type="file" id="input-photo-file" accept="image/*" style="display:none;" />
+          </label>
+        </div>
+
+        <!-- Hazard Observation Dropdown -->
+        <div class="form-group" style="margin-top: 16px;">
+          <label class="form-label" data-i18n="hazardTypeLabel">Visible Hazard Observation:</label>
+          <select id="select-hazard-type" class="form-select">
+            <option value="hazardCrack" data-i18n="hazardCrack">Surface Tension Crack in Soil/Road</option>
+            <option value="hazardWallBulge" data-i18n="hazardWallBulge">Bulging Stone/Concrete Retaining Wall</option>
+            <option value="hazardSeepage" data-i18n="hazardSeepage">Water Seepage / Wet Jhora Erosion</option>
+            <option value="hazardTiltedTrees" data-i18n="hazardTiltedTrees">Tilted Trees / Leaning Utility Poles (Soil Creep)</option>
+            <option value="hazardDebris" data-i18n="hazardDebris">Fresh Rockfall / Mud Debris Accumulation</option>
+          </select>
+        </div>
+
+        <!-- Notes Input -->
+        <div class="form-group">
+          <label class="form-label" data-i18n="notesLabel">Walker / Driver Notes (optional):</label>
+          <textarea id="input-report-notes" class="form-textarea" rows="2" data-i18n-placeholder="notesPlaceholder" placeholder="e.g., Water gushing near retaining wall, road cracked 2 inches..."></textarea>
+        </div>
+
+        <!-- Submit & Analyze Button -->
+        <button id="btn-analyze-report" class="btn btn-primary btn-block">
+          ⚡ <span data-i18n="analyzeButton">Analyze with On-Device AI</span>
+        </button>
+      </div>
+
+      <!-- AI Analysis Result Area -->
+      <div id="ai-analysis-result-card" class="hidden"></div>
+
+      <!-- Offline Report Queue Card -->
+      <div class="card">
+        <div class="result-header">
+          <h3 class="section-title" data-i18n="reportQueueTitle">Offline Report Queue</h3>
+          <span id="queued-reports-count" class="badge badge-queued">0 queued</span>
+        </div>
+        <div class="btn-row" style="margin-bottom: 12px;">
+          <button id="btn-sync-reports" class="btn btn-sm btn-outline">
+            🔄 <span data-i18n="syncNowButton">Simulate Cloud Sync</span>
+          </button>
+          <button id="btn-clear-reports" class="btn btn-sm btn-secondary">
+            🗑️ <span data-i18n="clearQueueButton">Clear Stored Reports</span>
+          </button>
+        </div>
+        <div id="slope-reports-list"></div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- Panel 2: B6 Road Status Mesh -->
+    <!-- ================================================================= -->
+    <section id="panel-mesh" class="tab-panel">
+      <div class="card">
+        <h2 class="section-title" data-i18n="meshTitle">Hill Road Status Mesh</h2>
+        <p class="section-subtitle" data-i18n="meshSubtitle">Crowd-sourced road blockages propagated peer-to-peer. On-device LLM deduplicates and summarizes corridors.</p>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="corridorLabel">Select Mountain Corridor:</label>
+          <select id="select-road-corridor" class="form-select"></select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="passableLabel">Passability Status:</label>
+          <select id="select-road-passable" class="form-select">
+            <option value="no" data-i18n="passableNo">BLOCKED / Closed to All Traffic</option>
+            <option value="caution" data-i18n="passableCaution">High Clearance 4WD Only</option>
+            <option value="yes" data-i18n="passableYes">Passable (Slow / Light Vehicles)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="locationDetailLabel">Specific Milepost / Landmark:</label>
+          <input type="text" id="input-road-location" class="form-input" data-i18n-placeholder="locationDetailPlaceholder" placeholder="e.g. Kurseong 14th Mile near Paglajhora..." />
+        </div>
+
+        <!-- Blockage Photo Attachment -->
+        <div class="form-group">
+          <label class="form-label">Attach Blockage Photo (Optional):</label>
+          <label class="btn btn-sm btn-secondary">
+            📷 Select Blockage Photo
+            <input type="file" id="input-road-photo-file" accept="image/*" style="display:none;" />
+          </label>
+          <div id="road-photo-preview-box" class="preview-card-box hidden" style="margin-top: 8px;"></div>
+        </div>
+
+        <button id="btn-submit-road-report" class="btn btn-primary btn-block">
+          📡 <span data-i18n="submitRoadReport">Log Road Report to Mesh</span>
+        </button>
+      </div>
+
+      <!-- Live Route Status Board (Deduplicated & Summarized) -->
+      <div class="card">
+        <h3 class="section-title" data-i18n="dedupSummaryTitle">AI Route Status Board (Deduplicated & Summarized)</h3>
+        <div id="route-status-board"></div>
+      </div>
+
+      <!-- Recent Mesh Feed -->
+      <div class="card">
+        <h3 class="section-title" data-i18n="liveMeshFeedTitle">Recent P2P Road Reports</h3>
+        <div id="road-reports-feed"></div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- Panel 3: B7 Disaster-Ready Hills Assistant (Unifying Shell) -->
+    <!-- ================================================================= -->
+    <section id="panel-guide" class="tab-panel">
+      <!-- Conversational Offline AI Guide (RAG) -->
+      <div class="card">
+        <h2 class="section-title" data-i18n="guideTitle">Disaster-Ready Hills Assistant</h2>
+        <p class="section-subtitle" data-i18n="guideSubtitle">Grounded emergency response guidance and GPS distance to nearest functional health centers & shelters.</p>
+
+        <!-- Target Persona Highlights (Verbatim Brief Compliance) -->
+        <div class="facilities-tags" style="margin-bottom: 12px;">
+          <span class="facility-pill">🚶 Walker</span>
+          <span class="facility-pill">🚗 Driver / Passenger</span>
+          <span class="facility-pill">👨‍🌾 Terrace Farmer / Tea Worker</span>
+          <span class="facility-pill">🏡 Homestay Host</span>
+          <span class="facility-pill">🚂 DHR Railway Staff</span>
+        </div>
+
+        <div class="ai-query-box">
+          <input type="text" id="input-ai-question" class="form-input" data-i18n-placeholder="askAiPlaceholder" placeholder="Ask offline: 'What to do in landslide?', 'How to purify spring water?'..." />
+          <button id="btn-ask-ai-guide" class="btn btn-primary">
+            🔍 <span data-i18n="askAiButton">Consult Offline AI</span>
+          </button>
+        </div>
+
+        <div id="ai-answer-box" class="hidden"></div>
+      </div>
+
+      <!-- Step-by-Step Field Guides Accordion -->
+      <div class="card">
+        <h3 class="section-title" data-i18n="guidanceCategoriesTitle">Step-by-Step Emergency Field Guides</h3>
+        <div id="guidance-articles-accordion"></div>
+      </div>
+
+      <!-- Nearest Safe Action & Hospital / Shelter Locator -->
+      <div class="card">
+        <div class="result-header">
+          <h3 class="section-title" data-i18n="nearestSheltersTitle">Nearest Emergency Shelters & PHCs</h3>
+        </div>
+        <p id="gps-status-note" class="section-subtitle">📍 Acquiring GPS location for distance calculation...</p>
+
+        <div class="filter-btn-group">
+          <button class="shelter-filter-btn active" data-filter="all" data-i18n="filterAll">All Facilities</button>
+          <button class="shelter-filter-btn" data-filter="hospitals" data-i18n="filterHospitals">Hospitals / Trauma</button>
+          <button class="shelter-filter-btn" data-filter="shelters" data-i18n="filterShelters">Community Shelters</button>
+        </div>
+
+        <div id="shelters-distance-list"></div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- Panel 4: B1 / B6 P2P Alert Relay -->
+    <!-- ================================================================= -->
+    <section id="panel-relay" class="tab-panel">
+      <div class="card">
+        <h2 class="section-title" data-i18n="relayTitle">Zero-Signal P2P Alert Relay</h2>
+        <p class="section-subtitle" data-i18n="relaySubtitle">Broadcast emergency alerts and road updates to nearby phones without cellular internet or towers.</p>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="relayBroadcastTitle">Broadcast an Emergency Alert:</label>
+          <textarea id="input-alert-text" class="form-textarea" rows="3" data-i18n-placeholder="alertInputPlaceholder" placeholder="e.g. HIGH RISK: Mudslide active at Paglajhora. Divert to Pankhabari Road."></textarea>
+        </div>
+
+        <div class="btn-row">
+          <button id="btn-broadcast-alert" class="btn btn-primary">
+            📡 <span data-i18n="broadcastBtn">Generate Offline Relay Beacon</span>
+          </button>
+          <button id="btn-speak-alert" class="btn btn-secondary">
+            🔊 <span data-i18n="speakAloud">Read Aloud (TTS)</span>
+          </button>
+          <button id="btn-sound-siren" class="btn btn-secondary">
+            🚨 <span data-i18n="soundSiren">Play Siren</span>
+          </button>
+        </div>
+
+        <!-- Optical QR Beacon Display Card -->
+        <div id="qr-beacon-display-card" class="hidden">
+          <div id="qr-code-canvas-box"></div>
+        </div>
+
+        <div class="btn-row" style="margin-top: 14px;">
+          <button id="btn-scan-qr-relay" class="btn btn-outline btn-block">
+            📷 <span data-i18n="scanQrBtn">Scan / Ingest Incoming Relay Beacon</span>
+          </button>
+        </div>
+
+        <!-- WebRTC DataChannels & Web Bluetooth Advanced P2P Mesh Controls -->
+        <details class="guide-accordion-item card" style="margin-top: 16px;">
+          <summary class="guide-summary">
+            <span class="guide-category-tag">Advanced P2P Transport</span>
+            <h4 class="guide-title">📡 WebRTC DataChannels & Web Bluetooth Controls</h4>
+          </summary>
+          <div class="guide-content">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px;">
+              Direct browser-to-browser P2P transport with zero server signalling.
+            </p>
+            <div class="btn-row" style="margin-bottom: 8px;">
+              <button id="btn-create-webrtc-offer" class="btn btn-sm btn-primary">Create WebRTC Offer SDP</button>
+              <button id="btn-bluetooth-scan" class="btn btn-sm btn-secondary">Test Web Bluetooth Probe</button>
+            </div>
+            <p id="bluetooth-status-note" style="font-size: 0.75rem; color: var(--accent-cyan); margin-bottom: 8px;"></p>
+            <div class="form-group">
+              <label class="form-label" style="font-size: 0.75rem;">Local Generated SDP Payload:</label>
+              <textarea id="webrtc-sdp-output" class="form-textarea" rows="2" style="font-size: 0.75rem;" readonly placeholder="Generated SDP offer appears here..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="font-size: 0.75rem;">Paste Remote Peer SDP Answer:</label>
+              <textarea id="webrtc-sdp-input" class="form-textarea" rows="2" style="font-size: 0.75rem;" placeholder="Paste remote SDP answer to connect..."></textarea>
+              <button id="btn-apply-webrtc-sdp" class="btn btn-sm btn-outline" style="margin-top: 6px;">Connect WebRTC DataChannel</button>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Relayed Alerts Feed -->
+      <div class="card">
+        <h3 class="section-title" data-i18n="receivedAlertsTitle">Received Peer-to-Peer Alerts</h3>
+        <div id="relayed-alerts-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================================================================= -->
+  <!-- Gemma Offline AI Setup & Diagnostics Modal -->
+  <!-- ================================================================= -->
+  <div id="gemma-setup-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="gemma-modal-title">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3 id="gemma-modal-title" class="modal-title">
+          <span>🚂</span>
+          <span>Google Gemma Local Model Setup</span>
+        </h3>
+        <button id="btn-close-gemma-modal" class="modal-close-btn" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Live Status Card -->
+        <div class="card" style="margin: 0; background: rgba(56, 189, 248, 0.05); border-color: rgba(56, 189, 248, 0.2);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Active On-Device Engine</div>
+              <div id="modal-active-engine" style="font-size: 1rem; font-weight: 700; color: var(--accent-cyan); margin-top: 2px;">
+                Detecting...
+              </div>
+            </div>
+            <button id="btn-refresh-ollama" class="btn btn-sm btn-outline">🔄 Re-scan Local Runner</button>
+          </div>
+        </div>
+
+        <!-- Connection Settings -->
+        <div class="form-group">
+          <label class="form-label" for="input-ollama-endpoint">Local Runner Endpoint URL:</label>
+          <input type="text" id="input-ollama-endpoint" class="form-input" value="http://localhost:11434" placeholder="http://localhost:11434" />
+          <span style="font-size: 0.75rem; color: var(--text-dim);">Default Ollama local port is 11434.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-ollama-model">Target Gemma Model:</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="input-ollama-model" class="form-input" list="installed-models-datalist" value="gemma2:2b" placeholder="e.g. gemma2:2b, gemma4:e4b, codegemma:2b" />
+            <datalist id="installed-models-datalist">
+              <option value="gemma2:2b"></option>
+              <option value="gemma3:4b"></option>
+              <option value="gemma4:e4b"></option>
+              <option value="codegemma:2b"></option>
+              <option value="gemma:2b"></option>
+            </datalist>
+            <button id="btn-save-ai-config" class="btn btn-primary" style="white-space: nowrap;">Save & Connect</button>
+          </div>
+        </div>
+
+        <!-- OS Setup Guides (GDG Siliguri Hackathon) -->
+        <div>
+          <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: var(--text-main);">
+            📦 GDG Siliguri Setup Guide (Run before boarding)
+          </div>
+          <div class="setup-tab-nav">
+            <button class="setup-tab-btn active" data-os-tab="win">Windows</button>
+            <button class="setup-tab-btn" data-os-tab="mac">macOS</button>
+            <button class="setup-tab-btn" data-os-tab="linux">Linux</button>
+          </div>
+
+          <!-- Windows Tab -->
+          <div id="os-tab-win" class="os-setup-content" style="margin-top: 8px;">
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">1. In PowerShell, install Ollama runner:</p>
+            <div class="code-block">winget install Ollama.Ollama</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0 4px;">2. Pull and run recommended Gemma model:</p>
+            <div class="code-block">ollama run gemma2:2b</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0 4px;">3. Allow browser CORS (in a separate PowerShell window):</p>
+            <div class="code-block">$env:OLLAMA_ORIGINS="*" ; ollama serve</div>
+          </div>
+
+          <!-- macOS Tab -->
+          <div id="os-tab-mac" class="os-setup-content hidden" style="margin-top: 8px;">
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">1. In Terminal, install with Homebrew:</p>
+            <div class="code-block">brew install ollama</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0 4px;">2. Pull and run Gemma:</p>
+            <div class="code-block">ollama run gemma2:2b</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0 4px;">3. Start server with CORS:</p>
+            <div class="code-block">OLLAMA_ORIGINS="*" ollama serve</div>
+          </div>
+
+          <!-- Linux Tab -->
+          <div id="os-tab-linux" class="os-setup-content hidden" style="margin-top: 8px;">
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">1. In Terminal, install Ollama:</p>
+            <div class="code-block">curl -fsSL https://ollama.com/install.sh | sh</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0 4px;">2. Pull and run Gemma:</p>
+            <div class="code-block">ollama run gemma2:2b</div>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin: 8px 0 4px;">3. Launch with CORS enabled:</p>
+            <div class="code-block">OLLAMA_ORIGINS="*" ollama serve</div>
+          </div>
+        </div>
+
+        <!-- Live Model Test Sandbox -->
+        <div class="prompt-sandbox">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emerald);">🧪 Live Offline Gemma Test Bench</span>
+            <span id="test-sandbox-status" style="font-size: 0.75rem; color: var(--text-dim);">Ready</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="input-test-prompt" class="form-input" value="Explain how tension cracks lead to landslides in Darjeeling in 2 sentences." placeholder="Enter test prompt for local Gemma..." />
+            <button id="btn-run-gemma-test" class="btn btn-sm btn-primary" style="white-space: nowrap;">⚡ Run Test</button>
+          </div>
+          <div id="gemma-test-output" style="font-size: 0.82rem; color: #e2e8f0; background: #060a11; padding: 10px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06); min-height: 48px; white-space: pre-wrap;">
+Click "Run Test" to generate response via your local Gemma model or fallback matrix.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ES6 Module Script Entry -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="192" height="192">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2137"/>
+      <stop offset="50%" stop-color="#183658"/>
+      <stop offset="100%" stop-color="#0a131f"/>
+    </linearGradient>
+    <linearGradient id="peakGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="mountainGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="mountainGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="100" fill="url(#bgGrad)"/>
+  <circle cx="256" cy="256" r="215" fill="none" stroke="#38bdf8" stroke-width="8" opacity="0.4"/>
+  
+  <polygon points="120,360 256,150 392,360" fill="url(#mountainGrad2)" opacity="0.85"/>
+  <polygon points="256,150 200,230 256,220 310,230" fill="url(#peakGrad)"/>
+  
+  <polygon points="60,380 180,210 320,380" fill="url(#mountainGrad1)" opacity="0.9"/>
+  <polygon points="220,390 350,230 460,390" fill="#0369a1" opacity="0.95"/>
+
+  <path d="M 80,410 C 180,390 330,430 432,410" fill="none" stroke="#e2e8f0" stroke-width="12" stroke-linecap="round"/>
+  
+  <path d="M 216,110 A 50,50 0 0 1 296,110" fill="none" stroke="#38bdf8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M 196,80 A 80,80 0 0 1 316,80" fill="none" stroke="#38bdf8" stroke-width="10" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="256" cy="140" r="18" fill="#ef4444"/>
+</svg>

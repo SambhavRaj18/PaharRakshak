@@ -1,0 +1,24 @@
+{
+  "name": "PaharRakshak - Hills Disaster & Mesh PWA",
+  "short_name": "PaharRakshak",
+  "description": "Offline Landslide Reporter, Road Status Mesh & Disaster-Ready Hills Assistant for Darjeeling & Himalayan Communities",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d1520",
+  "theme_color": "#0f2137",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./assets/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./assets/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
