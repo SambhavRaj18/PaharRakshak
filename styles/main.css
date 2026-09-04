@@ -130,27 +130,29 @@ body {
 .brand-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
-  min-width: 0;
+  flex-shrink: 0;
+  min-width: max-content;
 }
 
 .app-logo {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: var(--radius-sm);
   box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
   flex-shrink: 0;
 }
 
 .brand-title {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .brand-subtitle {
@@ -164,7 +166,7 @@ body {
 .header-controls {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   flex-shrink: 0;
 }
 
@@ -172,12 +174,14 @@ body {
   background: var(--bg-surface);
   color: var(--text-main);
   border: 1px solid var(--border-subtle);
-  padding: 6px 10px;
+  padding: 4px 6px;
   border-radius: var(--radius-full);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 600;
   cursor: pointer;
   outline: none;
+  max-width: 74px;
+  text-align: center;
   transition: all 0.2s;
 }
 
@@ -1228,8 +1232,9 @@ body {
   }
 
   .lang-select {
-    padding: 4px 8px;
-    font-size: 0.74rem;
+    padding: 3px 6px;
+    font-size: 0.72rem;
+    max-width: 68px;
   }
 
   .contrast-toggle-wrap {
